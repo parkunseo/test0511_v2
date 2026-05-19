@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monster Energy | Unleash The Beast</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Orbitron:wght@700;900&family=Noto+Sans+KR:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans KR', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        body {
+            background-color: #050505;
+            overflow: hidden;
+        }
+        section {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            padding: 0 100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            overflow: hidden;
+        }
+        header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 40px 100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+        header .logo {
+            font-family: 'Syncopate', sans-serif;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.4rem;
+            letter-spacing: 4px;
+            font-weight: 700;
+        }
+        header .logo span {
+            color: #55cc00; 
+            text-shadow: 0 0 15px rgba(85,204,0,0.6);
+            transition: color 0.5s;
+        }
+        header ul {
+            display: flex;
+            align-items: center;
+        }
+        header ul li {
+            list-style: none;
+        }
+        header ul li a {
+            color: rgba(255,255,255,0.6);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            margin-left: 50px;
+            text-decoration: none;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            transition: 0.3s ease;
+        }
+        header ul li a:hover {
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255,255,255,0.8);
+        }\
+        .content { 
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 2;
+            margin-top: 40px;
+        }
+        .content .textBox {
+            max-width: 650px;
+        }
+        .content .textBox h2 {
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.2em;
+            line-height: 1.1em;
+            font-weight: 900;
+            font-style: italic;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+        }
+        .content .textBox h2 span {
+            display: inline-block;
+            color: #55cc00;
+            font-size: 1em;
+            text-shadow: 0 0 25px rgba(85, 204, 0, 0.5);
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .content .textBox p {
+            color: rgba(255,255,255,0.7);
+            margin-top: 25px;
+            font-size: 1.05em;
+            line-height: 1.8em;
+            font-weight: 300;
+            word-break: keep-all;
+        }\
+        .content .textBox a {
+            display: inline-block;
+            margin-top: 35px;
+            padding: 15px 40px;
+            background-color: #55cc00;
+            color: #000;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-style: italic;
+            border-radius: 0px; 
+            letter-spacing: 2px;
+            text-decoration: none;
+            text-transform: uppercase;
+            box-shadow: 0 5px 20px rgba(85, 204, 0, 0.3);
+            transition: 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+            border: 1px solid transparent;
+        }
+        .content .textBox a:hover {
+            transform: translateY(-3px);
+            background-color: transparent;
+            color: #55cc00;
+            border-color: #55cc00;
+            box-shadow: 0 10px 30px rgba(85, 204, 0, 0.6);
+        }\
+        .imgBox {
+            width: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .imgBox img {
+            max-height: 580px;
+            filter: drop-shadow(0 30px 50px rgba(0,0,0,0.9));
+            transition: 0.6s cubic-bezier(0.075, 0.82, 0.165, 1);
+            animation: float 4s ease-in-out infinite; 
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }\
+        .thumb {
+            position: absolute;
+            display: flex;
+            bottom: 40px;
+            left: 100px;
+            z-index: 10;
+        }
+        .thumb li {
+            list-style: none;
+            margin-right: 25px;
+            cursor: pointer;
+            transition: 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+            background: rgba(255,255,255,0.02);
+            padding: 15px 20px;
+            border-radius: 4px;
+            border: 1px solid rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+        }
+        .thumb li:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.08);
+        }
+        .thumb li.active {
+            border-color: currentColor;
+            background: rgba(255,255,255,0.1);
+        }
+        .thumb li img {
+            max-height: 80px;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
+        }\
+        .sci {
+            position: absolute;
+            top: 50%;
+            right: 40px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 2;
+        }
+        .sci li {
+            list-style: none;
+            margin-top: 25px;
+        }
+        .sci li a img {
+            filter: invert(1);
+            opacity: 0.4;
+            max-width: 20px;
+            transition: 0.3s;
+        }
+        .sci li a img:hover {
+            opacity: 1;
+            transform: scale(1.25);
+        }\
+        .circle {
+            position: absolute;
+            width: 900px;
+            height: 900px;
+            right: -100px;
+            bottom: -200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(85, 204, 0, 0.25) 0%, rgba(0,0,0,0) 70%);
+            pointer-events: none; 
+            transition: background 0.8s ease, transform 0.1s ease-out; 
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <section id="mainSection">
+        <div class="circle" id="glowCircle"></div> 
+        
+        <header>
+            <a href="#" class="logo">MONSTER<span>ENERGY</span></a>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Racing</a></li>
+                <li><a href="#">Products</a></li>
+                <li><a href="#">Squad</a></li>
+            </ul>
+        </header>
+        
+        <div class="content"> 
+            <div class="textBox"> 
+                <h2>Unleash The Beast<br><span id="productTitle">Ultra White</span></h2>
+                <p id="productDesc">0.001초의 한계를 다투는 F1 트랙과 거친 MotoGP 바이크 서킷 위에서 드라이버들이 선택한 독보적인 에너지. 칼로리 부담 없이 미칠듯한 아드레날린과 극도의 집중력을 지금 충전하세요.</p>
+                <a href="#" id="ctaButton">Race Now</a>
+            </div>
+            <div class="imgBox">
+                <img src="./imgs/white.png" alt="Monster Energy Can" class="monster">
+            </div>
+        </div>
+
+        <ul class="thumb">
+            <li class="active" style="color: #55cc00;" onclick="changeProduct(this, './imgs/white.png', 'Ultra White', '#55cc00', '0.001초의 한계를 다투는 F1 트랙과 거친 MotoGP 바이크 서킷 위에서 드라이버들이 선택한 독보적인 에너지. 칼로리 부담 없이 미칠듯한 아드레날린과 극도의 집중력을 지금 충전하세요.')">
+                <img src="./imgs/thumb_white.png">
+            </li>
+            <li style="color: #ff8800;" onclick="changeProduct(this, './imgs/mango.png', 'Mango Loco', '#ff8800', '멕시코 전통 축제에서 영감을 받은 이국적인 망고 주스 블렌딩. 서킷 뒤 짜릿한 승리의 파티 타임에 걸맞은 폭발적이고 달콤한 에너지를 선사합니다.')">
+                <img src="./imgs/thumb_mango.png">
+            </li>
+            <li style="color: #ff4477;" onclick="changeProduct(this, './imgs/strawberry.png', 'Strawberry Dream', '#ff4477', '달콤한 스트로베리 향과 강력한 몬스터 에너지가 결합된 스페셜 에디션. 거친 트랙을 핑크빛 환상으로 물들일 가장 트렌디한 질주를 시작해 보세요.')">
+                <img src="./imgs/thumb_strawberry.png">
+            </li>
+        </ul>
+
+        <ul class="sci">
+            <li><a href="#"><img src="./imgs/facebook.png"></a></li>
+            <li><a href="#"><img src="./imgs/twitter.png"></a></li>
+            <li><a href="#"><img src="./imgs/instagram.png"></a></li>
+        </ul>
+    </section>
+
+    <script>
+        const circle = document.getElementById('glowCircle');
+        const section = document.getElementById('mainSection');
+        section.addEventListener('mousemove', (e) => {
+            const moveX = (window.innerWidth / 2 - e.pageX) * 0.03;
+            const moveY = (window.innerHeight / 2 - e.pageY) * 0.03;
+            circle.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        });
+        function changeProduct(element, imgPath, textName, colorHex, description) {
+            document.querySelectorAll('.thumb li').forEach(li => li.classList.remove('active'));
+            element.classList.add('active');
+
+            document.querySelector('.monster').src = imgPath;
+            
+            const titleSpan = document.getElementById('productTitle');
+            titleSpan.style.transform = 'scale(0.8) rotate(-3deg)';
+            titleSpan.style.opacity = '0';
+            
+            setTimeout(() => {
+                titleSpan.innerText = textName;
+                titleSpan.style.color = colorHex;
+                titleSpan.style.textShadow = `0 0 30px ${colorHex}`;
+                titleSpan.style.transform = 'scale(1) rotate(0deg)';
+                titleSpan.style.opacity = '1';
+            }, 150);
+
+            document.getElementById('productDesc').innerText = description;
+            
+            document.querySelector('header .logo span').style.color = colorHex;
+            document.querySelector('header .logo span').style.textShadow = `0 0 15px ${colorHex}`;
+            
+            const ctaBtn = document.getElementById('ctaButton');
+            ctaBtn.style.backgroundColor = colorHex;
+            ctaBtn.style.boxShadow = `0 5px 20px ${colorHex}4d`;
+
+            circle.style.background = `radial-gradient(circle, ${colorHex}bf 0%, rgba(0,0,0,0) 70%)`;
+        }
+    </script>
+</body>
+</html>
