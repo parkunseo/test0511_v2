@@ -136,16 +136,16 @@
             display: inline-block;
         }
 
-        /* [수정] 텍스트가 선을 뚫고 지나가지 않도록 폰트 크기 최적화 및 줄바꿈 예외 처리 */
+        /* [수정] Strawberry 단어가 깨지지 않도록 반응형 뷰포트 크기(vw) 적용 및 단어 우선 제한 설정 */
         .text-side h1 {
             font-family: 'Bodoni Moda', serif;
             font-style: italic;
-            font-size: 4.2em; 
+            font-size: min(4.5vw, 4.5em); 
             line-height: 1.1em;
             font-weight: 900;
             color: var(--dnk-brown);
-            word-break: break-all; 
-            overflow-wrap: break-word;
+            word-break: keep-all; 
+            overflow-wrap: normal; 
         }
 
         .text-side p {
