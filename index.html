@@ -122,13 +122,18 @@
             border-right: 1px solid rgba(43, 26, 17, 0.15);
         }
 
+        /* [수정] CULT OBJECT 텍스트를 핑크/오렌지 그라데이션으로 변경 */
         .text-side .collection-name {
             font-family: 'Montserrat', sans-serif;
             font-size: 0.85em;
             font-weight: 800;
-            color: var(--dnk-orange); 
             letter-spacing: 4px;
             margin-bottom: 25px;
+            background: linear-gradient(135deg, var(--dnk-pink) 0%, var(--dnk-orange) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
         }
 
         .text-side h1 {
@@ -261,6 +266,7 @@
             font-size: 0.75em;
             color: rgba(43, 26, 17, 0.4);
             margin-bottom: 5px;
+            transition: color 0.3s;
         }
 
         .footer-navigation .nav-cell .meta-info .object-title {
@@ -305,10 +311,18 @@
             border-top: 4px solid var(--dnk-pink);
         }
        
-        /* [수정] 세 번째 배너 활성화 시 검정 계열에서 진한 브라운(커피) 톤으로 명확하게 변경 */
+        /* [수정] 세 번째 배너를 완벽하고 깊이감 있는 웜 브라운 색상 톤으로 대폭 개선 */
         .footer-navigation .nav-cell.active-03 {
-            background-color: rgba(43, 26, 17, 0.08);
+            background-color: #EDE6DF !important; /* 밀크 브라운 섀이드 */
             border-top: 4px solid var(--dnk-brown);
+        }
+
+        .footer-navigation .nav-cell.active-03 .meta-info .index-num {
+            color: var(--dnk-brown) !important; /* 비활성화 회색에서 진한 브라운으로 명시적 변경 */
+            font-weight: 500;
+        }
+        .footer-navigation .nav-cell.active-03 .meta-info .object-title {
+            color: var(--dnk-brown) !important;
         }
     </style>
 </head>
