@@ -156,18 +156,18 @@
             align-self: flex-start;
             margin-top: 40px;
             padding: 16px 40px;
-            background-color: var(--dnk-brown);
+            background: var(--dnk-brown);
             color: var(--dnk-cream);
             font-family: 'Montserrat', sans-serif;
             font-size: 0.8em;
             font-weight: 500;
             letter-spacing: 2px;
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease, background 0.3s ease;
         }
 
         .text-side .archive-btn:hover {
-            background-color: var(--dnk-pink); 
+            background: linear-gradient(135deg, var(--dnk-pink) 0%, var(--dnk-orange) 100%);
             transform: translateX(5px);
         }
 
@@ -305,8 +305,9 @@
             border-top: 4px solid var(--dnk-pink);
         }
        
+        /* [수정] 세 번째 배너 활성화 시 검정 계열에서 진한 브라운(커피) 톤으로 명확하게 변경 */
         .footer-navigation .nav-cell.active-03 {
-            background-color: rgba(43, 26, 11, 0.04);
+            background-color: rgba(43, 26, 17, 0.08);
             border-top: 4px solid var(--dnk-brown);
         }
     </style>
