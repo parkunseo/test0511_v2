@@ -64,7 +64,6 @@
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s;
         }
 
-        /* [수정] 호버 시 기울어짐(rotate) 제거 */
         header .brand-logo a:hover {
             color: var(--dnk-pink);
             transform: scale(1.05);
@@ -172,13 +171,14 @@
             transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* [수정] 가상 요소 슬라이드 애니메이션을 제거하고 정적 트랜지션으로 전면 변경 */
+        /* [수정 완료] 여백은 그대로 유지하고 마우스 호버 시 움직임만 완벽히 차단한 버튼 */
         .text-side .archive-btn {
             display: inline-block;
             align-self: flex-start;
             margin-top: 40px;
             padding: 18px 45px;
-            background: var(--dnk-brown);
+            background-color: var(--dnk-brown);
+            background-image: none;
             color: var(--dnk-cream);
             font-family: 'Montserrat', sans-serif;
             font-size: 0.85em;
@@ -188,18 +188,20 @@
             position: relative;
             z-index: 1;
             box-shadow: 0 4px 0px #000;
-            transition: background 0.2s ease, transform 0.2s, box-shadow 0.2s, color 0.2s;
+            transition: background 0.25s ease, color 0.25s ease;
         }
 
-        /* [수정] 호버 시 한 번에 전체 색상이 그라데이션으로 변경되도록 처리 */
+        /* [수정 완료] 마우스를 올려도 튕기거나 크기가 뒤틀리지 않도록 속성 고정 */
         .text-side .archive-btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 15px rgba(225, 26, 128, 0.3);
-            background: linear-gradient(90deg, var(--dnk-pink), var(--dnk-orange));
+            background-image: linear-gradient(90deg, var(--dnk-pink), var(--dnk-orange));
+            color: #fff;
+            box-shadow: 0 4px 0px #000; /* 기존과 동일하게 고정 */
+        }
+
+        .text-side .archive-btn:active { 
+            background-image: linear-gradient(90deg, var(--dnk-pink), var(--dnk-orange));
             color: #fff;
         }
-
-        .text-side .archive-btn:active { transform: translateY(0); box-shadow: 0 2px 0px #000; }
 
         /* Visual Side */
         .visual-side {
@@ -242,7 +244,6 @@
             z-index: 2;
         }
 
-        /* [수정] 테두리 두께를 3px에서 1px로 얇게 조절 */
         .object-frame {
             width: 440px;
             height: 500px;
@@ -256,7 +257,6 @@
             box-shadow: 0 30px 60px rgba(43, 26, 11, 0.1);
         }
 
-        /* [수정] 좌측 상단 식별자를 사제 기호(+) 포지션으로 최적화 */
         .object-frame::before {
             content: '+';
             position: absolute;
@@ -363,7 +363,6 @@
             height: auto;
         }
 
-        /* 호버 시 테두리 변경 코드 제거 -> 크기만 유연하게 확대 */
         .footer-navigation .nav-cell:hover .preview-circle {
             transform: scale(1.1);
         }
