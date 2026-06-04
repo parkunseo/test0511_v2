@@ -28,7 +28,7 @@
             height: 100vh;
         }
 
-        /* 전체를 감싸는 스페이스 공간 (3D 왜곡 제거) */
+        /* 전체를 감싸는 스페이스 공간 */
         .window-wrapper {
             width: 100%;
             max-width: 1920px;
@@ -245,7 +245,7 @@
             100% { transform: translateX(-50%); }
         }
 
-        /* 심플한 정적 카드 액자 (3D 인터랙션 제거) */
+        /* 심플한 정적 카드 액자 */
         .object-frame-wrapper {
             z-index: 2;
         }
@@ -274,7 +274,7 @@
             letter-spacing: 2px;
         }
 
-        /* 메인 통통 튀는 도넛 오브제 (트랜스폼 수치 정형화) */
+        /* 메인 통통 튀는 도넛 오브제 */
         .visual-side img.main-object {
             max-width: 80%;
             height: auto;
@@ -289,7 +289,9 @@
             50% { transform: translateY(-15px) rotate(3deg); }
         }
 
-        /* Footer Navigation */
+        /* ========================================================
+           ★ CLEAN & MINIMAL FOOTER NAVIGATION (수정 및 정돈)
+        ======================================================== */
         .footer-navigation {
             width: 100%;
             max-width: 1600px;
@@ -302,7 +304,7 @@
         }
 
         .footer-navigation .nav-cell {
-            padding: 35px 40px;
+            padding: 30px 40px;
             border-right: 1px solid rgba(43, 26, 17, 0.15);
             cursor: pointer;
             display: flex;
@@ -310,30 +312,20 @@
             align-items: center;
             position: relative;
             background-color: transparent;
-            transition: background-color 0.3s ease;
+            /* 상단에 깔끔하게 생길 보더 라인 사전 세팅 */
+            border-top: 0px solid transparent; 
+            margin-top: -2px; /* 부모 보더와 겹치도록 처리 */
+            transition: background-color 0.3s ease, border-top-width 0.2s ease;
         }
 
-        /* 호버 시 과한 슬라이드 대신 은은한 배경색과 하단 라인으로 변경 */
-        .footer-navigation .nav-cell::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 100%; height: 0;
-            z-index: 5;
-            transition: height 0.2s ease;
+        .footer-navigation .nav-cell:last-child { 
+            border-right: none; 
         }
 
-        .footer-navigation .nav-cell:hover::after { height: 4px; }
-        #cell-1:hover::after { background: var(--dnk-orange); }
-        #cell-2:hover::after { background: var(--dnk-pink); }
-        #cell-3:hover::after { background: #604C3F; }
-
-        /* 호버 시 배경에 은은한 틴트 컬러 적용 */
-        #cell-1:hover { background-color: rgba(255, 103, 31, 0.03); }
-        #cell-2:hover { background-color: rgba(225, 26, 128, 0.03); }
-        #cell-3:hover { background-color: rgba(96, 76, 63, 0.03); }
-
-        .footer-navigation .nav-cell:last-child { border-right: none; }
+        /* [호버 효과] 살짝 밝아지거나 부드러운 무드 부여 */
+        .footer-navigation .nav-cell:hover {
+            background-color: rgba(43, 26, 17, 0.02);
+        }
 
         .footer-navigation .nav-cell .meta-info {
             display: flex;
@@ -341,9 +333,9 @@
             transition: transform 0.3s ease;
         }
 
-        /* 옆으로 밀리는 대신 위로 아주 살짝 정돈되게 움직임 */
+        /* [호버 효과] 텍스트가 오른쪽으로 살짝 이동하는 위트 유지 */
         .footer-navigation .nav-cell:hover .meta-info { 
-            transform: translateY(-2px); 
+            transform: translateX(5px); 
         }
 
         .footer-navigation .nav-cell .meta-info .index-num {
@@ -355,129 +347,49 @@
         }
 
         .footer-navigation .nav-cell .meta-info .object-title {
-            font-size: 1.1em;
+            font-size: 1.05em;
             font-weight: 800;
             letter-spacing: 1px;
             color: var(--dnk-brown);
         }
 
-        /* 썸네일 서클 호버 액션 간소화 (회전 제거, 팝업 축소) */
+        /* 썸네일 서클: 회전 및 과한 쉐도우 제거 후 미니멀하게 변경 */
         .footer-navigation .nav-cell .preview-circle {
-            width: 50px;
-            height: 50px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
-            border: 2px solid var(--dnk-brown);
+            border: 1.5px solid rgba(43, 26, 17, 0.2);
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             background-color: #fff;
-            box-shadow: 0 3px 0 var(--dnk-brown);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, border-color 0.3s ease;
         }
 
         .footer-navigation .nav-cell .preview-circle img {
-            width: 80%;
+            width: 75%;
             height: auto;
         }
 
-        /* 회전(rotate)을 빼고 크기만 아주 살짝 키워 세련되게 변경 */
+        /* 호버 시 썸네일은 회전 없이 깔끔하게 크기만 살짝 확대 */
         .footer-navigation .nav-cell:hover .preview-circle {
-            transform: scale(1.08);
-            box-shadow: 0 5px 8px rgba(43, 26, 11, 0.1);
+            transform: scale(1.1);
+            border-color: var(--dnk-brown);
         }
 
-        /* Active 스타일 고도화 (기존 유지) */
+        /* [Active 상태 스타일] 셀마다 컬러풀한 테마를 상단 보더 라인으로만 미니멀하게 표현 */
         .footer-navigation .nav-cell.active-01 {
-            background-color: rgba(255, 103, 31, 0.08) !important;
-            border-top: 6px solid var(--dnk-orange);
+            background-color: rgba(43, 26, 17, 0.04);
+            border-top: 5px solid var(--dnk-orange);
         }
         .footer-navigation .nav-cell.active-02 {
-            background-color: rgba(225, 26, 128, 0.08) !important;
-            border-top: 6px solid var(--dnk-pink);
+            background-color: rgba(43, 26, 17, 0.04);
+            border-top: 5px solid var(--dnk-pink);
         }
         .footer-navigation .nav-cell.active-03 {
-            background-color: #EDE6DF !important; 
-            border-top: 6px solid #604C3F;
-        }
-
-        /* 호버 시 밑에서 올라오는 컬러풀 바 */
-        .footer-navigation .nav-cell::after {
-            content: '';
-            position: absolute;
-            bottom: -100%; left: 0;
-            width: 100%; height: 100%;
-            z-index: -1;
-            transition: bottom 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        .footer-navigation .nav-cell:hover::after { bottom: -92%; }
-        #cell-1:hover::after { background: var(--dnk-orange); }
-        #cell-2:hover::after { background: var(--dnk-pink); }
-        #cell-3:hover::after { background: #604C3F; }
-
-        .footer-navigation .nav-cell:last-child { border-right: none; }
-
-        .footer-navigation .nav-cell .meta-info {
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .footer-navigation .nav-cell:hover .meta-info { transform: translateX(8px) scale(1.02); }
-
-        .footer-navigation .nav-cell .meta-info .index-num {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.75em;
-            font-weight: 700;
-            color: rgba(43, 26, 17, 0.4);
-            margin-bottom: 5px;
-        }
-
-        .footer-navigation .nav-cell .meta-info .object-title {
-            font-size: 1.1em;
-            font-weight: 800;
-            letter-spacing: 1px;
-            color: var(--dnk-brown);
-        }
-
-        /* 썸네일 서클 팝업 회전 액션 */
-        .footer-navigation .nav-cell .preview-circle {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: 2px solid var(--dnk-brown);
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #fff;
-            box-shadow: 0 4px 0 var(--dnk-brown);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.5), box-shadow 0.3s;
-        }
-
-        .footer-navigation .nav-cell .preview-circle img {
-            width: 80%;
-            height: auto;
-        }
-
-        .footer-navigation .nav-cell:hover .preview-circle {
-            transform: scale(1.25) rotate(180deg);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
-        }
-
-        /* Active 스타일 고도화 */
-        .footer-navigation .nav-cell.active-01 {
-            background-color: rgba(255, 103, 31, 0.08);
-            border-top: 6px solid var(--dnk-orange);
-        }
-        .footer-navigation .nav-cell.active-02 {
-            background-color: rgba(225, 26, 128, 0.08);
-            border-top: 6px solid var(--dnk-pink);
-        }
-        .footer-navigation .nav-cell.active-03 {
-            background-color: #EDE6DF; 
-            border-top: 6px solid #604C3F;
+            background-color: rgba(43, 26, 17, 0.04); 
+            border-top: 5px solid var(--dnk-brown);
         }
     </style>
 </head>
@@ -555,7 +467,6 @@
     </div>
 
     <script>
-        // 1. 하이퍼 셔터 드롭 전시 교체 인터랙션
         let isAnimating = false;
 
         function switchExhibit(meta, title, desc, bgText, imgPath, activeNum, element) {
@@ -573,7 +484,7 @@
             shutter.style.transition = 'left 0.45s cubic-bezier(0.645, 0.045, 0.355, 1)';
             shutter.style.left = '120%';
 
-            // B. 내부 컨텐츠 교체 (230ms 타이밍)
+            // B. 내부 컨텐츠 교체
             setTimeout(() => {
                 targetMeta.innerText = meta;
                 targetTitle.innerHTML = title;
@@ -585,13 +496,12 @@
                 
                 mainImg.src = imgPath;
 
-                // 도넛 등장 애니메이션 리셋
                 mainImg.style.animation = 'none';
-                mainImg.offsetHeight; // Reflow 발생
+                mainImg.offsetHeight; 
                 mainImg.style.animation = 'objectFloat 4s ease-in-out infinite';
             }, 230);
 
-            // C. 가림막 완전 탈출 및 대기 상태 리셋
+            // C. 가림막 리셋
             setTimeout(() => {
                 shutter.style.transition = 'none';
                 shutter.style.left = '-150%';
