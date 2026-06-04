@@ -28,7 +28,6 @@
             height: 100vh;
         }
 
-        /* 전체를 감싸는 스페이스 공간 */
         .window-wrapper {
             width: 100%;
             max-width: 1920px;
@@ -40,7 +39,6 @@
             justify-content: space-between;
         }
 
-        /* Header */
         header {
             width: 100%;
             max-width: 1600px;
@@ -97,7 +95,6 @@
         header ul li a:hover { color: var(--dnk-orange); }
         header ul li a:hover::after { width: 100%; }
 
-        /* Showcase Container */
         .showcase-container {
             width: 100%;
             max-width: 1600px;
@@ -109,7 +106,6 @@
             position: relative;
         }
 
-        /* 화면 대전환용 사선 컬러 셔터막 */
         .slide-shutter {
             position: absolute;
             top: 0; left: -150%;
@@ -171,17 +167,12 @@
             transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* [수정] 크기 및 위치 변화가 없도록 완벽한 중앙 정렬 구조(Flex) 배치 고정 */
         .text-side .archive-btn {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
+            display: inline-block;
             align-self: flex-start;
             margin-top: 40px;
-            width: 210px;
-            height: 54px;
-            background-color: var(--dnk-brown);
-            background-image: none;
+            padding: 18px 45px;
+            background: var(--dnk-brown);
             color: var(--dnk-cream);
             font-family: 'Montserrat', sans-serif;
             font-size: 0.85em;
@@ -194,17 +185,15 @@
             transition: background 0.2s ease, transform 0.2s, box-shadow 0.2s, color 0.2s;
         }
 
-        /* [수정] 박스 크기 및 텍스트 정렬 축 뒤틀림 없이 정적 배경색만 즉시 변경되도록 고정 */
         .text-side .archive-btn:hover {
             transform: translateY(-4px);
             box-shadow: 0 8px 15px rgba(225, 26, 128, 0.3);
-            background-image: linear-gradient(90deg, var(--dnk-pink), var(--dnk-orange));
+            background: linear-gradient(90deg, var(--dnk-pink), var(--dnk-orange));
             color: #fff;
         }
 
         .text-side .archive-btn:active { transform: translateY(0); box-shadow: 0 2px 0px #000; }
 
-        /* Visual Side */
         .visual-side {
             width: 55%;
             height: 100%;
@@ -214,7 +203,6 @@
             align-items: center;
         }
 
-        /* 무한 흐르는 거대 텍스트 이펙트 */
         .bg-giant-wrap {
             position: absolute;
             width: 200%;
@@ -240,7 +228,6 @@
             100% { transform: translateX(-50%); }
         }
 
-        /* 심플한 정적 카드 액자 */
         .object-frame-wrapper {
             z-index: 2;
         }
@@ -284,9 +271,6 @@
             50% { transform: translateY(-15px) rotate(3deg); }
         }
 
-        /* ========================================================
-           ★ CLEAN & MINIMAL FOOTER NAVIGATION
-        ======================================================== */
         .footer-navigation {
             width: 100%;
             max-width: 1600px;
@@ -345,7 +329,6 @@
             color: var(--dnk-brown);
         }
 
-        /* 원형 썸네일 기본 스타일 (은은한 경계선 유지) */
         .footer-navigation .nav-cell .preview-circle {
             width: 48px;
             height: 48px;
@@ -368,7 +351,6 @@
             transform: scale(1.1);
         }
 
-        /* Active 상태 스타일 */
         .footer-navigation .nav-cell.active-01 {
             background-color: rgba(43, 26, 17, 0.04);
             border-top: 5px solid var(--dnk-orange);
@@ -469,12 +451,10 @@
             const targetDesc = document.getElementById('target-desc');
             const bgTexts = document.querySelectorAll('.bg-giant-text');
             const mainImg = document.getElementById('target-img');
-            
-            // A. 사선 가림막 슬라이드 진입
+
             shutter.style.transition = 'left 0.45s cubic-bezier(0.645, 0.045, 0.355, 1)';
             shutter.style.left = '120%';
 
-            // B. 내부 컨텐츠 교체
             setTimeout(() => {
                 targetMeta.innerText = meta;
                 targetTitle.innerHTML = title;
@@ -491,14 +471,12 @@
                 mainImg.style.animation = 'objectFloat 4s ease-in-out infinite';
             }, 230);
 
-            // C. 가림막 리셋
             setTimeout(() => {
                 shutter.style.transition = 'none';
                 shutter.style.left = '-150%';
                 isAnimating = false;
             }, 550);
 
-            // 하단 내비게이션 활성 클래스 처리
             const allCells = document.querySelectorAll('.nav-cell');
             allCells.forEach(cell => {
                 cell.classList.remove('active-01', 'active-02', 'active-03');
