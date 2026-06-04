@@ -1,4 +1,295 @@
-/* Footer Navigation */
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DUNKIN' ODD OBJECTS CULT : HYPER</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@1,600;1,900&family=Montserrat:wght@300;500;800&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dnk-pink: #E11A80;
+            --dnk-orange: #FF671F;
+            --dnk-cream: #FDFBF7;
+            --dnk-brown: #2B1A11;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--dnk-cream); 
+            color: var(--dnk-brown); 
+            font-family: 'Noto Sans KR', sans-serif;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            height: 100vh;
+        }
+
+        /* 전체를 감싸는 스페이스 공간 (3D 왜곡 제거) */
+        .window-wrapper {
+            width: 100%;
+            max-width: 1920px;
+            height: 100vh;
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Header */
+        header {
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 35px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--dnk-brown);
+            z-index: 1000;
+        }
+
+        header .brand-logo a {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.6em;
+            color: var(--dnk-brown);
+            text-decoration: none;
+            letter-spacing: -1px;
+            display: inline-block;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        header .brand-logo a:hover {
+            color: var(--dnk-pink);
+            transform: scale(1.05) rotate(-2deg);
+        }
+
+        header ul { display: flex; }
+        header ul li { list-style: none; }
+        header ul li a {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85em;
+            font-weight: 800;
+            color: var(--dnk-brown);
+            margin-left: 50px;
+            text-decoration: none;
+            letter-spacing: 2px;
+            position: relative;
+            padding: 5px 0;
+            display: inline-block;
+            transition: color 0.3s;
+        }
+
+        header ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 3px;
+            background: linear-gradient(90deg, var(--dnk-pink), var(--dnk-orange));
+            transition: width 0.3s ease;
+        }
+
+        header ul li a:hover { color: var(--dnk-orange); }
+        header ul li a:hover::after { width: 100%; }
+
+        /* Showcase Container */
+        .showcase-container {
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 60px;
+            display: flex;
+            align-items: center;
+            flex: 1;
+            position: relative;
+        }
+
+        /* 화면 대전환용 사선 컬러 셔터막 */
+        .slide-shutter {
+            position: absolute;
+            top: 0; left: -150%;
+            width: 130%; height: 100%;
+            background: linear-gradient(135deg, var(--dnk-pink) 0%, var(--dnk-orange) 100%);
+            transform: skewX(-20deg);
+            z-index: 99;
+            pointer-events: none;
+        }
+
+        /* Text Side */
+        .text-side {
+            width: 45%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-right: 60px;
+            border-right: 1px solid rgba(43, 26, 17, 0.15);
+            z-index: 10;
+        }
+
+        .reveal-wrapper {
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .text-side .collection-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9em;
+            font-weight: 800;
+            letter-spacing: 5px;
+            background: linear-gradient(135deg, var(--dnk-pink) 0%, var(--dnk-orange) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .text-side h1 {
+            font-family: 'Bodoni Moda', serif;
+            font-style: italic;
+            font-size: min(4.5vw, 4.2em); 
+            line-height: 1.15em;
+            font-weight: 900;
+            color: var(--dnk-brown);
+            word-break: keep-all; 
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .text-side p {
+            font-size: 1em;
+            font-weight: 400;
+            line-height: 1.9em;
+            color: rgba(43, 26, 17, 0.8);
+            margin-top: 20px;
+            word-break: keep-all;
+            max-width: 480px;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .text-side .archive-btn {
+            display: inline-block;
+            align-self: flex-start;
+            margin-top: 40px;
+            padding: 18px 45px;
+            background: var(--dnk-brown);
+            color: var(--dnk-cream);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85em;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 4px 0px #000;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .text-side .archive-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, var(--dnk-pink), var(--dnk-orange));
+            transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: -1;
+        }
+
+        .text-side .archive-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 15px rgba(225, 26, 128, 0.3);
+            color: #fff;
+        }
+
+        .text-side .archive-btn:hover::before { left: 0; }
+        .text-side .archive-btn:active { transform: translateY(0); box-shadow: 0 2px 0px #000; }
+
+        /* Visual Side */
+        .visual-side {
+            width: 55%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 무한 흐르는 거대 텍스트 이펙트 */
+        .bg-giant-wrap {
+            position: absolute;
+            width: 200%;
+            display: flex;
+            overflow: hidden;
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .bg-giant-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13em;
+            font-weight: 900;
+            color: rgba(43, 26, 17, 0.05);
+            letter-spacing: -2px;
+            animation: textFlow 25s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes textFlow {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* 심플한 정적 카드 액자 (3D 인터랙션 제거) */
+        .object-frame-wrapper {
+            z-index: 2;
+        }
+
+        .object-frame {
+            width: 440px;
+            height: 500px;
+            border: 3px solid var(--dnk-brown);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(253, 251, 247, 0.4);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 30px 60px rgba(43, 26, 11, 0.1);
+        }
+
+        .object-frame::before {
+            content: 'LAB.EXE';
+            position: absolute;
+            top: 15px; left: 18px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            color: var(--dnk-brown);
+            font-size: 0.8em;
+            letter-spacing: 2px;
+        }
+
+        /* 메인 통통 튀는 도넛 오브제 (트랜스폼 수치 정형화) */
+        .visual-side img.main-object {
+            max-width: 80%;
+            height: auto;
+            z-index: 3;
+            filter: drop-shadow(0 30px 40px rgba(43, 26, 11, 0.25));
+            transition: transform 0.6s cubic-bezier(0.34, 1.7, 0.64, 1), opacity 0.3s;
+            animation: objectFloat 4s ease-in-out infinite; 
+        }
+
+        @keyframes objectFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
+        }
+
+        /* Footer Navigation */
         .footer-navigation {
             width: 100%;
             max-width: 1600px;
@@ -109,3 +400,214 @@
             background-color: #EDE6DF !important; 
             border-top: 6px solid #604C3F;
         }
+
+        /* 호버 시 밑에서 올라오는 컬러풀 바 */
+        .footer-navigation .nav-cell::after {
+            content: '';
+            position: absolute;
+            bottom: -100%; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            transition: bottom 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .footer-navigation .nav-cell:hover::after { bottom: -92%; }
+        #cell-1:hover::after { background: var(--dnk-orange); }
+        #cell-2:hover::after { background: var(--dnk-pink); }
+        #cell-3:hover::after { background: #604C3F; }
+
+        .footer-navigation .nav-cell:last-child { border-right: none; }
+
+        .footer-navigation .nav-cell .meta-info {
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .footer-navigation .nav-cell:hover .meta-info { transform: translateX(8px) scale(1.02); }
+
+        .footer-navigation .nav-cell .meta-info .index-num {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75em;
+            font-weight: 700;
+            color: rgba(43, 26, 17, 0.4);
+            margin-bottom: 5px;
+        }
+
+        .footer-navigation .nav-cell .meta-info .object-title {
+            font-size: 1.1em;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: var(--dnk-brown);
+        }
+
+        /* 썸네일 서클 팝업 회전 액션 */
+        .footer-navigation .nav-cell .preview-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid var(--dnk-brown);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            box-shadow: 0 4px 0 var(--dnk-brown);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.5), box-shadow 0.3s;
+        }
+
+        .footer-navigation .nav-cell .preview-circle img {
+            width: 80%;
+            height: auto;
+        }
+
+        .footer-navigation .nav-cell:hover .preview-circle {
+            transform: scale(1.25) rotate(180deg);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+        }
+
+        /* Active 스타일 고도화 */
+        .footer-navigation .nav-cell.active-01 {
+            background-color: rgba(255, 103, 31, 0.08);
+            border-top: 6px solid var(--dnk-orange);
+        }
+        .footer-navigation .nav-cell.active-02 {
+            background-color: rgba(225, 26, 128, 0.08);
+            border-top: 6px solid var(--dnk-pink);
+        }
+        .footer-navigation .nav-cell.active-03 {
+            background-color: #EDE6DF; 
+            border-top: 6px solid #604C3F;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="window-wrapper">
+        
+        <header>
+            <div class="brand-logo"><a href="#">DUNKIN' OBJECTS</a></div>
+            <ul>
+                <li><a href="#">COLLECTION</a></li>
+                <li><a href="#">LAB STORE</a></li>
+                <li><a href="#">OUR VISION</a></li>
+            </ul>
+        </header>
+
+        <div class="showcase-container" id="showcase-container">
+            <div class="slide-shutter" id="shutter"></div>
+            
+            <div class="text-side">
+                <div class="reveal-wrapper"><div class="collection-name" id="target-meta">CULT OBJECT . 01</div></div>
+                <div class="reveal-wrapper"><h1 id="target-title">Famous<br>Original Glazed</h1></div>
+                <div class="reveal-wrapper"><p id="target-desc">지정된 단맛의 규칙을 파괴하다.<br>던킨의 시그니처 텍스처를 크림 아카이브 감성으로 미니멀하게 정제해 낸 프리미엄 에디션 오브제.</p></div>
+                <a href="#" class="archive-btn">VIEW DETAILS</a>
+            </div>
+
+            <div class="visual-side">
+                <div class="bg-giant-wrap">
+                    <span class="bg-giant-text" id="target-bg-text">GLAZED &nbsp; GLAZED &nbsp;</span>
+                    <span class="bg-giant-text" id="target-bg-text-2">GLAZED &nbsp; GLAZED &nbsp;</span>
+                </div>
+                
+                <div class="object-frame-wrapper">
+                    <div class="object-frame">
+                        <img src="./imgs/donut1.png" alt="Dunkin Core Object" class="main-object" id="target-img">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-navigation">
+            
+            <div class="nav-cell active-01" id="cell-1" onclick="switchExhibit('CULT OBJECT . 01', 'Famous<br>Glazed', '지정된 단맛의 규칙을 파괴하다. 던킨의 시그니처 텍스처를 크림 아카이브 감성으로 미니멀하게 정제해 낸 프리미엄 에디션 오브제.', 'GLAZED', './imgs/donut1.png', 1, this)">
+                <div class="meta-info">
+                    <span class="index-num">01 / ORANGE SHADE</span>
+                    <span class="object-title">FAMOUS GLAZED</span>
+                </div>
+                <div class="preview-circle">
+                    <img src="./imgs/thumb1.png" alt="thumb1">
+                </div>
+            </div>
+
+            <div class="nav-cell" id="cell-2" onclick="switchExhibit('CULT OBJECT . 02', 'Strawberry<br>Poison', '달콤한 스트로베리 시럽 위에 뿌려진 스프링클. 입안에 퍼지는 상큼한 딸기의 산미와 오묘한 밸런스를 느껴보세요.', 'POISON', './imgs/donut2.png', 2, this)">
+                <div class="meta-info">
+                    <span class="index-num">02 / PINK SHADE</span>
+                    <span class="object-title">STRAWBERRY FIELD</span>
+                </div>
+                <div class="preview-circle">
+                    <img src="./imgs/thumb2.png" alt="thumb2">
+                </div>
+            </div>
+
+            <div class="nav-cell" id="cell-3" onclick="switchExhibit('CULT OBJECT . 03', 'Bavarian<br>Deep Ash', '부드러운 크림 슈가와 바삭한 에쉬 브라운 입자의 충돌. 무겁고 고요하게 가라앉는 깊은 풍미의 미학을 남깁니다.', 'BAVARIAN', './imgs/donut3.png', 3, this)">
+                <div class="meta-info">
+                    <span class="index-num">03 / BROWN SHADE</span>
+                    <span class="object-title">BAVARIAN FIELD</span>
+                </div>
+                <div class="preview-circle">
+                    <img src="./imgs/thumb3.png" alt="thumb3">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // 1. 하이퍼 셔터 드롭 전시 교체 인터랙션
+        let isAnimating = false;
+
+        function switchExhibit(meta, title, desc, bgText, imgPath, activeNum, element) {
+            if (isAnimating) return;
+            isAnimating = true;
+
+            const shutter = document.getElementById('shutter');
+            const targetMeta = document.getElementById('target-meta');
+            const targetTitle = document.getElementById('target-title');
+            const targetDesc = document.getElementById('target-desc');
+            const bgTexts = document.querySelectorAll('.bg-giant-text');
+            const mainImg = document.getElementById('target-img');
+            
+            // A. 사선 가림막 슬라이드 진입
+            shutter.style.transition = 'left 0.45s cubic-bezier(0.645, 0.045, 0.355, 1)';
+            shutter.style.left = '120%';
+
+            // B. 내부 컨텐츠 교체 (230ms 타이밍)
+            setTimeout(() => {
+                targetMeta.innerText = meta;
+                targetTitle.innerHTML = title;
+                targetDesc.innerText = desc;
+                
+                bgTexts.forEach(txt => {
+                    txt.innerText = bgText + " \u00a0 " + bgText + " \u00a0 ";
+                });
+                
+                mainImg.src = imgPath;
+
+                // 도넛 등장 애니메이션 리셋
+                mainImg.style.animation = 'none';
+                mainImg.offsetHeight; // Reflow 발생
+                mainImg.style.animation = 'objectFloat 4s ease-in-out infinite';
+            }, 230);
+
+            // C. 가림막 완전 탈출 및 대기 상태 리셋
+            setTimeout(() => {
+                shutter.style.transition = 'none';
+                shutter.style.left = '-150%';
+                isAnimating = false;
+            }, 550);
+
+            // 하단 내비게이션 활성 클래스 처리
+            const allCells = document.querySelectorAll('.nav-cell');
+            allCells.forEach(cell => {
+                cell.classList.remove('active-01', 'active-02', 'active-03');
+            });
+
+            if(activeNum === 1) element.classList.add('active-01');
+            if(activeNum === 2) element.classList.add('active-02');
+            if(activeNum === 3) element.classList.add('active-03');
+        }
+    </script>
+</body>
+</html>
