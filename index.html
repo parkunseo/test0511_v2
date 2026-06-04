@@ -290,7 +290,7 @@
         }
 
         /* ========================================================
-           ★ CLEAN & MINIMAL FOOTER NAVIGATION (수정 및 정돈)
+           ★ CLEAN & MINIMAL FOOTER NAVIGATION
         ======================================================== */
         .footer-navigation {
             width: 100%;
@@ -312,9 +312,8 @@
             align-items: center;
             position: relative;
             background-color: transparent;
-            /* 상단에 깔끔하게 생길 보더 라인 사전 세팅 */
             border-top: 0px solid transparent; 
-            margin-top: -2px; /* 부모 보더와 겹치도록 처리 */
+            margin-top: -2px; 
             transition: background-color 0.3s ease, border-top-width 0.2s ease;
         }
 
@@ -322,7 +321,6 @@
             border-right: none; 
         }
 
-        /* [호버 효과] 살짝 밝아지거나 부드러운 무드 부여 */
         .footer-navigation .nav-cell:hover {
             background-color: rgba(43, 26, 17, 0.02);
         }
@@ -333,7 +331,6 @@
             transition: transform 0.3s ease;
         }
 
-        /* [호버 효과] 텍스트가 오른쪽으로 살짝 이동하는 위트 유지 */
         .footer-navigation .nav-cell:hover .meta-info { 
             transform: translateX(5px); 
         }
@@ -353,7 +350,7 @@
             color: var(--dnk-brown);
         }
 
-        /* 썸네일 서클: 회전 및 과한 쉐도우 제거 후 미니멀하게 변경 */
+        /* 원형 썸네일 기본 스타일 (은은한 경계선 유지) */
         .footer-navigation .nav-cell .preview-circle {
             width: 48px;
             height: 48px;
@@ -364,7 +361,7 @@
             justify-content: center;
             align-items: center;
             background-color: #fff;
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            transition: transform 0.3s ease;
         }
 
         .footer-navigation .nav-cell .preview-circle img {
@@ -372,13 +369,12 @@
             height: auto;
         }
 
-        /* 호버 시 썸네일은 회전 없이 깔끔하게 크기만 살짝 확대 */
+        /* [수정 완료] 호버 시 테보리 변경 코드 제거 -> 크기만 유연하게 확대 */
         .footer-navigation .nav-cell:hover .preview-circle {
             transform: scale(1.1);
-            border-color: var(--dnk-brown);
         }
 
-        /* [Active 상태 스타일] 셀마다 컬러풀한 테마를 상단 보더 라인으로만 미니멀하게 표현 */
+        /* Active 상태 스타일 */
         .footer-navigation .nav-cell.active-01 {
             background-color: rgba(43, 26, 17, 0.04);
             border-top: 5px solid var(--dnk-orange);
