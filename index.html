@@ -53,6 +53,7 @@
             z-index: 1000;
         }
 
+        /* [수정] 로고에 마우스 호버 시 핑크-주황 그라데이션 적용 */
         header .brand-logo a {
             font-family: 'Montserrat', sans-serif;
             font-weight: 800;
@@ -65,7 +66,10 @@
         }
 
         header .brand-logo a:hover {
-            color: var(--dnk-pink);
+            background: linear-gradient(135deg, var(--dnk-pink) 0%, var(--dnk-orange) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             transform: scale(1.05);
         }
 
@@ -171,7 +175,7 @@
             transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* [수정 완료] 여백은 그대로 유지하고 마우스 호버 시 움직임만 완벽히 차단한 버튼 */
+        /* [수정] 하단 검은선(box-shadow) 제거하여 완전 평면 미니멀 스타일 구현 */
         .text-side .archive-btn {
             display: inline-block;
             align-self: flex-start;
@@ -187,20 +191,21 @@
             text-decoration: none;
             position: relative;
             z-index: 1;
-            box-shadow: 0 4px 0px #000;
+            box-shadow: none; /* 하단 검은색 입체 라인 제거 */
             transition: background 0.25s ease, color 0.25s ease;
         }
 
-        /* [수정 완료] 마우스를 올려도 튕기거나 크기가 뒤틀리지 않도록 속성 고정 */
+        /* [수정] 호버 상태에서도 검은 선이 나타나지 않도록 차단 */
         .text-side .archive-btn:hover {
             background-image: linear-gradient(90deg, var(--dnk-pink), var(--dnk-orange));
             color: #fff;
-            box-shadow: 0 4px 0px #000; /* 기존과 동일하게 고정 */
+            box-shadow: none; 
         }
 
         .text-side .archive-btn:active { 
             background-image: linear-gradient(90deg, var(--dnk-pink), var(--dnk-orange));
             color: #fff;
+            box-shadow: none;
         }
 
         /* Visual Side */
