@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DUNKIN' ODD OBJECTS CULT</title>
+    <title>DUNKIN' ODD OBJECTS CULT : HYPER</title>
     <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@1,600;1,900&family=Montserrat:wght@300;500;800&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -11,7 +11,7 @@
             --dnk-orange: #FF671F;
             --dnk-cream: #FDFBF7;
             --dnk-brown: #2B1A11;
-            --glow-color: rgba(255, 103, 31, 0.2);
+            --glow-color: rgba(255, 103, 31, 0.35);
         }
 
         * {
@@ -25,18 +25,34 @@
             color: var(--dnk-brown); 
             font-family: 'Noto Sans KR', sans-serif;
             overflow-x: hidden;
-            perspective: 1000px;
+            overflow-y: hidden;
+            height: 100vh;
         }
 
+        /* 전체를 감싸는 3D 스페이스 공간 */
         .window-wrapper {
             width: 100%;
             max-width: 1920px;
-            min-height: 100vh;
+            height: 100vh;
             margin: 0 auto;
             position: relative;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            perspective: 1500px; /* 3D 공간 왜곡률 설정 */
+        }
+
+        /* 마우스 조명 효과 레이어 */
+        .mouse-glow {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--glow-color) 0%, rgba(253,251,247,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+            transition: background 0.5s ease;
         }
 
         /* Header */
@@ -44,7 +60,7 @@
             width: 100%;
             max-width: 1600px;
             margin: 0 auto;
-            padding: 40px 60px;
+            padding: 35px 60px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -59,57 +75,64 @@
             color: var(--dnk-brown);
             text-decoration: none;
             letter-spacing: -1px;
-            transition: color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            display: inline-block;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         header .brand-logo a:hover {
             color: var(--dnk-pink);
+            transform: scale(1.05) rotate(-2deg);
         }
 
-        header ul {
-            display: flex;
-        }
-
-        header ul li {
-            list-style: none;
-        }
-
+        header ul { display: flex; }
+        header ul li { list-style: none; }
         header ul li a {
             font-family: 'Montserrat', sans-serif;
             font-size: 0.85em;
-            font-weight: 500;
+            font-weight: 800;
             color: var(--dnk-brown);
             margin-left: 50px;
             text-decoration: none;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             position: relative;
-            padding-bottom: 4px;
+            padding: 5px 0;
+            display: inline-block;
+            transition: color 0.3s;
         }
 
         header ul li a::after {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--dnk-orange);
-            transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            bottom: 0; left: 0;
+            width: 0; height: 3px;
+            background: linear-gradient(90deg, var(--dnk-pink), var(--dnk-orange));
+            transition: width 0.3s ease;
         }
 
-        header ul li a:hover::after {
-            width: 100%;
-        }
+        header ul li a:hover { color: var(--dnk-orange); }
+        header ul li a:hover::after { width: 100%; }
 
         /* Showcase Container */
         .showcase-container {
             width: 100%;
             max-width: 1600px;
             margin: 0 auto;
-            padding: 40px 60px;
+            padding: 0 60px;
             display: flex;
-            align-items: stretch;
+            align-items: center;
             flex: 1;
+            position: relative;
+        }
+
+        /* 화면 대전환용 사선 컬러 셔터막 */
+        .slide-shutter {
+            position: absolute;
+            top: 0; left: -150%;
+            width: 130%; height: 100%;
+            background: linear-gradient(135deg, var(--dnk-pink) 0%, var(--dnk-orange) 100%);
+            transform: skewX(-20deg);
+            z-index: 99;
+            pointer-events: none;
         }
 
         /* Text Side */
@@ -118,73 +141,68 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding-right: 40px;
+            padding-right: 60px;
             border-right: 1px solid rgba(43, 26, 17, 0.15);
             z-index: 10;
         }
 
+        .reveal-wrapper {
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
         .text-side .collection-name {
             font-family: 'Montserrat', sans-serif;
-            font-size: 0.85em;
+            font-size: 0.9em;
             font-weight: 800;
-            letter-spacing: 4px;
-            margin-bottom: 25px;
+            letter-spacing: 5px;
             background: linear-gradient(135deg, var(--dnk-pink) 0%, var(--dnk-orange) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             display: inline-block;
-            transform: translateY(0);
             transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        /* Text Masking Reveal Effect */
-        .reveal-wrapper {
-            overflow: hidden;
-            margin-bottom: 10px;
         }
 
         .text-side h1 {
             font-family: 'Bodoni Moda', serif;
             font-style: italic;
-            font-size: min(4.2vw, 3.8em); 
-            line-height: 1.2em;
+            font-size: min(4.5vw, 4.2em); 
+            line-height: 1.15em;
             font-weight: 900;
             color: var(--dnk-brown);
             word-break: keep-all; 
-            overflow-wrap: normal; 
-            transform: translateY(0);
-            transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .text-side p {
-            font-size: 0.95em;
+            font-size: 1em;
             font-weight: 400;
-            line-height: 1.8em;
-            color: rgba(43, 26, 17, 0.7);
+            line-height: 1.9em;
+            color: rgba(43, 26, 17, 0.8);
             margin-top: 20px;
             word-break: keep-all;
             max-width: 480px;
-            transform: translateY(0);
-            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .text-side .archive-btn {
             display: inline-block;
             align-self: flex-start;
             margin-top: 40px;
-            padding: 16px 40px;
+            padding: 18px 45px;
             background: var(--dnk-brown);
             color: var(--dnk-cream);
             font-family: 'Montserrat', sans-serif;
-            font-size: 0.8em;
-            font-weight: 500;
-            letter-spacing: 2px;
+            font-size: 0.85em;
+            font-weight: 800;
+            letter-spacing: 3px;
             text-decoration: none;
             position: relative;
             overflow: hidden;
             z-index: 1;
-            transition: transform 0.3s, color 0.3s;
+            box-shadow: 0 4px 0px #000;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
         .text-side .archive-btn::before {
@@ -192,106 +210,108 @@
             position: absolute;
             top: 0; left: -100%;
             width: 100%; height: 100%;
-            background: linear-gradient(135deg, var(--dnk-pink) 0%, var(--dnk-orange) 100%);
+            background: linear-gradient(90deg, var(--dnk-pink), var(--dnk-orange));
             transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1);
             z-index: -1;
         }
 
         .text-side .archive-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 15px rgba(225, 26, 128, 0.3);
             color: #fff;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(225, 26, 128, 0.2);
         }
 
-        .text-side .archive-btn:hover::before {
-            left: 0;
-        }
+        .text-side .archive-btn:hover::before { left: 0; }
+        .text-side .archive-btn:active { transform: translateY(0); box-shadow: 0 2px 0px #000; }
 
         /* Visual Side */
         .visual-side {
             width: 55%;
+            height: 100%;
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
+            transform-style: preserve-3d; /* 3D 자식노드 활성화 */
+        }
+
+        /* 무한 흐르는 거대 텍스트 이펙트 */
+        .bg-giant-wrap {
+            position: absolute;
+            width: 200%;
+            display: flex;
             overflow: hidden;
-        }
-
-        /* Background Glow Layer */
-        .visual-side::after {
-            content: '';
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            background: var(--glow-color);
-            filter: blur(80px);
-            border-radius: 50%;
-            z-index: 0;
-            pointer-events: none;
-            transition: background 0.8s ease;
-        }
-
-        .visual-side .bg-giant-text {
-            position: absolute;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 11em;
-            font-weight: 800;
-            color: rgba(43, 26, 17, 0.04);
-            letter-spacing: -5px;
-            user-select: none;
-            z-index: 1;
             white-space: nowrap;
-            transition: transform 0.2s ease-out, opacity 0.5s;
-            will-change: transform;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .bg-giant-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13em;
+            font-weight: 900;
+            color: rgba(43, 26, 17, 0.05);
+            letter-spacing: -2px;
+            animation: textFlow 25s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes textFlow {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* 3D 인터랙티브 카드 액자 */
+        .object-frame-wrapper {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            z-index: 2;
         }
 
         .object-frame {
-            width: 420px;
-            height: 480px;
-            border: 1px solid var(--dnk-brown);
+            width: 440px;
+            height: 500px;
+            border: 3px solid var(--dnk-brown);
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 2;
-            background-color: transparent;
-            overflow: hidden;
-            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        .object-frame:hover {
-            transform: scale(1.02);
+            background-color: rgba(253, 251, 247, 0.4);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 30px 60px rgba(43, 26, 11, 0.1);
+            transition: transform 0.1s ease-out, box-shadow 0.3s;
+            transform-style: preserve-3d;
         }
 
         .object-frame::before {
-            content: '+';
+            content: 'LAB.EXE';
             position: absolute;
-            top: 10px;
-            left: 14px;
+            top: 15px; left: 18px;
             font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
             color: var(--dnk-brown);
-            font-size: 1.2em;
-            animation: pulse 2s infinite;
+            font-size: 0.8em;
+            letter-spacing: 2px;
         }
 
-        @keyframes pulse {
-            0% { opacity: 0.3; }
-            50% { opacity: 1; }
-            100% { opacity: 0.3; }
-        }
-
+        /* 메인 통통 튀는 도넛 오브제 */
         .visual-side img.main-object {
-            max-width: 75%;
+            max-width: 80%;
             height: auto;
             z-index: 3;
-            filter: drop-shadow(0 20px 30px rgba(43, 26, 11, 0.15));
-            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
-            cursor: pointer;
+            transform: translateZ(80px); /* 액자 밖으로 튀어나오는 입체감 */
+            filter: drop-shadow(0 30px 40px rgba(43, 26, 11, 0.25));
+            transition: transform 0.6s cubic-bezier(0.34, 1.7, 0.64, 1), opacity 0.3s;
+            cursor: grab;
+            animation: objectFloat 4s ease-in-out infinite; /* 위아래로 둥둥 뜨는 모션 */
         }
 
-        .visual-side img.main-object:hover {
-            transform: scale(1.1) rotate(8deg) !important;
+        @keyframes objectFloat {
+            0%, 100% { transform: translateZ(80px) translateY(0px) rotate(0deg); }
+            50% { transform: translateZ(100px) translateY(-15px) rotate(3deg); }
         }
+
+        .visual-side img.main-object:active { cursor: grabbing; }
 
         /* Footer Navigation */
         .footer-navigation {
@@ -302,70 +322,74 @@
             grid-template-columns: repeat(3, 1fr); 
             border-top: 2px solid var(--dnk-brown);
             z-index: 1000;
+            background-color: var(--dnk-cream);
         }
 
         .footer-navigation .nav-cell {
-            padding: 30px 40px;
+            padding: 35px 40px;
             border-right: 1px solid rgba(43, 26, 17, 0.15);
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: relative;
-            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            background-color: transparent;
+            overflow: hidden;
+            transition: background-color 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-top 0.3s;
         }
 
-        .footer-navigation .nav-cell::before {
+        /* 호버 시 밑에서 올라오는 컬러풀 바 */
+        .footer-navigation .nav-cell::after {
             content: '';
             position: absolute;
-            top: -4px; left: 0;
-            width: 100%; height: 0;
-            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            bottom: -100%; left: 0;
+            width: 100%; height: 100%;
             z-index: -1;
+            transition: bottom 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        .footer-navigation .nav-cell:last-child {
-            border-right: none;
-        }
+        .footer-navigation .nav-cell:hover::after { bottom: -92%; }
+        #cell-1:hover::after { background: var(--dnk-orange); }
+        #cell-2:hover::after { background: var(--dnk-pink); }
+        #cell-3:hover::after { background: #604C3F; }
+
+        .footer-navigation .nav-cell:last-child { border-right: none; }
 
         .footer-navigation .nav-cell .meta-info {
             display: flex;
             flex-direction: column;
-            transition: transform 0.3s;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .footer-navigation .nav-cell:hover .meta-info {
-            transform: translateX(5px);
-        }
+        .footer-navigation .nav-cell:hover .meta-info { transform: translateX(8px) scale(1.02); }
 
         .footer-navigation .nav-cell .meta-info .index-num {
             font-family: 'Montserrat', sans-serif;
             font-size: 0.75em;
+            font-weight: 700;
             color: rgba(43, 26, 17, 0.4);
             margin-bottom: 5px;
-            transition: color 0.3s;
         }
 
         .footer-navigation .nav-cell .meta-info .object-title {
-            font-size: 1.05em;
-            font-weight: 700;
-            letter-spacing: 0.5px;
+            font-size: 1.1em;
+            font-weight: 800;
+            letter-spacing: 1px;
             color: var(--dnk-brown);
         }
 
-        /* Preview Circle Hooks */
+        /* 썸네일 서클 팝업 회전 액션 */
         .footer-navigation .nav-cell .preview-circle {
-            width: 45px;
-            height: 45px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            border: 1px solid rgba(43, 26, 17, 0.2);
+            border: 2px solid var(--dnk-brown);
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             background-color: #fff;
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s;
+            box-shadow: 0 4px 0 var(--dnk-brown);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.5), box-shadow 0.3s;
         }
 
         .footer-navigation .nav-cell .preview-circle img {
@@ -374,35 +398,29 @@
         }
 
         .footer-navigation .nav-cell:hover .preview-circle {
-            transform: scale(1.2) rotate(90deg);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: scale(1.25) rotate(180deg);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
         }
 
-        /* Active Interaction Styles */
+        /* Active 스타일 고도화 */
         .footer-navigation .nav-cell.active-01 {
-            background-color: rgba(255, 103, 31, 0.04);
-            border-top: 4px solid var(--dnk-orange);
+            background-color: rgba(255, 103, 31, 0.08);
+            border-top: 6px solid var(--dnk-orange);
         }
-        
         .footer-navigation .nav-cell.active-02 {
-            background-color: rgba(225, 26, 128, 0.04);
-            border-top: 4px solid var(--dnk-pink);
+            background-color: rgba(225, 26, 128, 0.08);
+            border-top: 6px solid var(--dnk-pink);
         }
-        
         .footer-navigation .nav-cell.active-03 {
             background-color: #EDE6DF; 
-            border-top: 4px solid #604C3F;
-        }
-
-        .footer-navigation .nav-cell.active-03 .meta-info .index-num {
-            color: #604C3F;
-            font-weight: 600;
+            border-top: 6px solid #604C3F;
         }
     </style>
 </head>
 <body>
 
     <div class="window-wrapper">
+        <div class="mouse-glow" id="mouse-glow"></div>
         
         <header>
             <div class="brand-logo"><a href="#">DUNKIN' OBJECTS</a></div>
@@ -413,7 +431,8 @@
             </ul>
         </header>
 
-        <div class="showcase-container">
+        <div class="showcase-container" id="showcase-container">
+            <div class="slide-shutter" id="shutter"></div>
             
             <div class="text-side">
                 <div class="reveal-wrapper"><div class="collection-name" id="target-meta">CULT OBJECT . 01</div></div>
@@ -422,11 +441,16 @@
                 <a href="#" class="archive-btn">VIEW DETAILS</a>
             </div>
 
-            <div class="visual-side" id="visual-zone">
-                <div class="bg-giant-text" id="target-bg-text">GLAZED</div>
+            <div class="visual-side">
+                <div class="bg-giant-wrap">
+                    <span class="bg-giant-text" id="target-bg-text">GLAZED &nbsp; GLAZED &nbsp;</span>
+                    <span class="bg-giant-text" id="target-bg-text-2">GLAZED &nbsp; GLAZED &nbsp;</span>
+                </div>
                 
-                <div class="object-frame">
-                    <img src="./imgs/donut1.png" alt="Dunkin Core Object" class="main-object" id="target-img">
+                <div class="object-frame-wrapper" id="tilt-wrapper">
+                    <div class="object-frame" id="tilt-card">
+                        <img src="./imgs/donut1.png" alt="Dunkin Core Object" class="main-object" id="target-img">
+                    </div>
                 </div>
             </div>
 
@@ -434,7 +458,7 @@
 
         <div class="footer-navigation">
             
-            <div class="nav-cell active-01" id="cell-1" onclick="switchExhibit('CULT OBJECT . 01', 'Famous<br>Glazed', '지정된 단맛의 규칙을 파괴하다. 던킨의 시그니처 텍스처를 크림 아카이브 감성으로 미니멀하게 정제해 낸 프리미엄 에디션 오브제.', 'GLAZED', './imgs/donut1.png', 1, this, 'rgba(255, 103, 31, 0.25)')">
+            <div class="nav-cell active-01" id="cell-1" onclick="switchExhibit('CULT OBJECT . 01', 'Famous<br>Glazed', '지정된 단맛의 규칙을 파괴하다. 던킨의 시그니처 텍스처를 크림 아카이브 감성으로 미니멀하게 정제해 낸 프리미엄 에디션 오브제.', 'GLAZED', './imgs/donut1.png', 1, this, 'rgba(255, 103, 31, 0.35)')">
                 <div class="meta-info">
                     <span class="index-num">01 / ORANGE SHADE</span>
                     <span class="object-title">FAMOUS GLAZED</span>
@@ -444,7 +468,7 @@
                 </div>
             </div>
 
-            <div class="nav-cell" id="cell-2" onclick="switchExhibit('CULT OBJECT . 02', 'Strawberry<br>Poison', '달콤한 스트로베리 시럽 위에 뿌려진 스프링클. 입안에 퍼지는 상큼한 딸기의 산미와 오묘한 밸런스를 느껴보세요.', 'POISON', './imgs/donut2.png', 2, this, 'rgba(225, 26, 128, 0.25)')">
+            <div class="nav-cell" id="cell-2" onclick="switchExhibit('CULT OBJECT . 02', 'Strawberry<br>Poison', '달콤한 스트로베리 시럽 위에 뿌려진 스프링클. 입안에 퍼지는 상큼한 딸기의 산미와 오묘한 밸런스를 느껴보세요.', 'POISON', './imgs/donut2.png', 2, this, 'rgba(225, 26, 128, 0.35)')">
                 <div class="meta-info">
                     <span class="index-num">02 / PINK SHADE</span>
                     <span class="object-title">STRAWBERRY FIELD</span>
@@ -454,7 +478,7 @@
                 </div>
             </div>
 
-            <div class="nav-cell" id="cell-3" onclick="switchExhibit('CULT OBJECT . 03', 'Bavarian<br>Deep Ash', '부드러운 크림 슈가와 바삭한 에쉬 브라운 입자의 충돌. 무겁고 고요하게 가라앉는 깊은 풍미의 미학을 남깁니다.', 'BAVARIAN', './imgs/donut3.png', 3, this, 'rgba(96, 76, 63, 0.3)')">
+            <div class="nav-cell" id="cell-3" onclick="switchExhibit('CULT OBJECT . 03', 'Bavarian<br>Deep Ash', '부드러운 크림 슈가와 바삭한 에쉬 브라운 입자의 충돌. 무겁고 고요하게 가라앉는 깊은 풍미의 미학을 남깁니다.', 'BAVARIAN', './imgs/donut3.png', 3, this, 'rgba(96, 76, 63, 0.4)')">
                 <div class="meta-info">
                     <span class="index-num">03 / BROWN SHADE</span>
                     <span class="object-title">BAVARIAN FIELD</span>
@@ -465,70 +489,86 @@
             </div>
 
         </div>
-
     </div>
 
     <script>
-        // 거대 배경 텍스트 마우스 반응형 매커니즘 (Parallax)
-        const visualZone = document.getElementById('visual-zone');
-        const giantText = document.getElementById('target-bg-text');
+        // 1. 전역 마우스 트래킹 조명(Aura) 스크립트
+        const glow = document.getElementById('mouse-glow');
+        window.addEventListener('mousemove', (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
 
-        visualZone.addEventListener('mousemove', (e) => {
-            const { clientX, clientY } = e;
-            const { innerWidth, innerHeight } = window;
+        // 2. 메인 프레임 3D 틸트(Tilt) 인터랙션 
+        const tiltWrapper = document.getElementById('tilt-wrapper');
+        const tiltCard = document.getElementById('tilt-card');
+
+        tiltWrapper.addEventListener('mousemove', (e) => {
+            const rect = tiltWrapper.getBoundingClientRect();
+            const x = e.clientX - rect.left; 
+            const y = e.clientY - rect.top; 
             
-            // 중심 기준 마우스 좌표 백분율 계산
-            const moveX = ((clientX - innerWidth / 2) / innerWidth) * 45;
-            const moveY = ((clientY - innerHeight / 2) / innerHeight) * 45;
+            // 정중앙을 0으로 잡고 각도 매핑 (-20deg ~ +20deg)
+            const xc = rect.width / 2;
+            const yc = rect.height / 2;
+            const angleX = (yc - y) / yc * 20; 
+            const angleY = (x - xc) / xc * 20;
 
-            giantText.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            tiltCard.style.transform = `rotateX(${angleX}deg) rotateY(${angleY}deg)`;
         });
 
-        visualZone.addEventListener('mouseleave', () => {
-            giantText.style.transform = 'translate(0px, 0px)';
+        tiltWrapper.addEventListener('mouseleave', () => {
+            tiltCard.style.transform = 'rotateX(0deg) rotateY(0deg)';
         });
 
-        // 전시 인터랙션 스위칭 함수
+
+        // 3. 하이퍼 셔터 드롭 전시 교체 인터랙션
+        let isAnimating = false; // 중복 클릭 컷 방지용 플래그
+
         function switchExhibit(meta, title, desc, bgText, imgPath, activeNum, element, glowColor) {
-            
+            if (isAnimating) return;
+            isAnimating = true;
+
+            const shutter = document.getElementById('shutter');
             const targetMeta = document.getElementById('target-meta');
             const targetTitle = document.getElementById('target-title');
             const targetDesc = document.getElementById('target-desc');
-            const targetBgText = document.getElementById('target-bg-text');
+            const bgTexts = document.querySelectorAll('.bg-giant-text');
             const mainImg = document.getElementById('target-img');
             
-            // 1. 텍스트 트랜지션 (사라지는 모션)
-            targetMeta.style.transform = 'translateY(-30px)';
-            targetTitle.style.transform = 'translateY(50px)';
-            targetDesc.style.transform = 'translateY(30px)';
-            targetBgText.style.opacity = '0';
+            // A. 사선 가림막 파워 슬라이드 진입
+            shutter.style.transition = 'left 0.45s cubic-bezier(0.645, 0.045, 0.355, 1)';
+            shutter.style.left = '120%';
 
-            // 2. 메인 오브제 트랜지션 (스핀하며 사라짐)
-            mainImg.style.transform = 'scale(0.4) rotate(-75deg)';
-            mainImg.style.opacity = '0';
-
-            // 3. 백그라운드 무드 네온 변경
-            document.documentElement.style.setProperty('--glow-color', glowColor);
-
+            // B. 가림막이 중간을 지날 때쯤 내부 컨텐츠 전격 교체 (230ms 타이밍)
             setTimeout(() => {
-                // 데이터 교체
+                // 루트 변수 변환을 통해 전체 오라(Aura) 톤 다운/업 매칭
+                document.documentElement.style.setProperty('--glow-color', glowColor);
+
                 targetMeta.innerText = meta;
                 targetTitle.innerHTML = title;
                 targetDesc.innerText = desc;
-                targetBgText.innerText = bgText;
+                
+                bgTexts.forEach(txt => {
+                    txt.innerText = bgText + " \u00a0 " + bgText + " \u00a0 ";
+                });
+                
                 mainImg.src = imgPath;
 
-                // 4. 컴백 애니메이션 (다시 차오르는 모션)
-                targetMeta.style.transform = 'translateY(0)';
-                targetTitle.style.transform = 'translateY(0)';
-                targetDesc.style.transform = 'translateY(0)';
-                targetBgText.style.opacity = '1';
+                // 도넛 등장 스케일 임팩트 연출
+                mainImg.style.animation = 'none';
+                mainImg.offsetHeight; // Reflow 발생으로 애니메이션 리셋
+                mainImg.style.animation = 'objectFloat 4s ease-in-out infinite';
+            }, 230);
 
-                mainImg.style.transform = 'scale(1) rotate(0deg)';
-                mainImg.style.opacity = '1';
-            }, 300);
+            // C. 가림막 완전 탈출 및 대기 상태 리셋
+            setTimeout(() => {
+                shutter.style.transition = 'none';
+                shutter.style.left = '-150%';
+                isAnimating = false;
+            }, 550);
 
-            // 하단 내비게이션 탭 상태 최적화
+            // 하단 내비게이션 활성 클래스 유틸라이징
             const allCells = document.querySelectorAll('.nav-cell');
             allCells.forEach(cell => {
                 cell.classList.remove('active-01', 'active-02', 'active-03');
