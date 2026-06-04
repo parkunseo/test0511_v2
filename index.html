@@ -11,7 +11,6 @@
             --dnk-orange: #FF671F;
             --dnk-cream: #FDFBF7;
             --dnk-brown: #2B1A11;
-            --glow-color: rgba(255, 103, 31, 0.35);
         }
 
         * {
@@ -29,7 +28,7 @@
             height: 100vh;
         }
 
-        /* 전체를 감싸는 3D 스페이스 공간 */
+        /* 전체를 감싸는 스페이스 공간 (3D 왜곡 제거) */
         .window-wrapper {
             width: 100%;
             max-width: 1920px;
@@ -39,20 +38,6 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            perspective: 1500px; /* 3D 공간 왜곡률 설정 */
-        }
-
-        /* 마우스 조명 효과 레이어 */
-        .mouse-glow {
-            position: fixed;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, var(--glow-color) 0%, rgba(253,251,247,0) 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 0;
-            transform: translate(-50%, -50%);
-            transition: background 0.5s ease;
         }
 
         /* Header */
@@ -232,7 +217,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            transform-style: preserve-3d; /* 3D 자식노드 활성화 */
         }
 
         /* 무한 흐르는 거대 텍스트 이펙트 */
@@ -261,10 +245,8 @@
             100% { transform: translateX(-50%); }
         }
 
-        /* 3D 인터랙티브 카드 액자 */
+        /* 심플한 정적 카드 액자 (3D 인터랙션 제거) */
         .object-frame-wrapper {
-            transform-style: preserve-3d;
-            perspective: 1000px;
             z-index: 2;
         }
 
@@ -279,8 +261,6 @@
             background-color: rgba(253, 251, 247, 0.4);
             backdrop-filter: blur(5px);
             box-shadow: 0 30px 60px rgba(43, 26, 11, 0.1);
-            transition: transform 0.1s ease-out, box-shadow 0.3s;
-            transform-style: preserve-3d;
         }
 
         .object-frame::before {
@@ -294,24 +274,20 @@
             letter-spacing: 2px;
         }
 
-        /* 메인 통통 튀는 도넛 오브제 */
+        /* 메인 통통 튀는 도넛 오브제 (트랜스폼 수치 정형화) */
         .visual-side img.main-object {
             max-width: 80%;
             height: auto;
             z-index: 3;
-            transform: translateZ(80px); /* 액자 밖으로 튀어나오는 입체감 */
             filter: drop-shadow(0 30px 40px rgba(43, 26, 11, 0.25));
             transition: transform 0.6s cubic-bezier(0.34, 1.7, 0.64, 1), opacity 0.3s;
-            cursor: grab;
-            animation: objectFloat 4s ease-in-out infinite; /* 위아래로 둥둥 뜨는 모션 */
+            animation: objectFloat 4s ease-in-out infinite; 
         }
 
         @keyframes objectFloat {
-            0%, 100% { transform: translateZ(80px) translateY(0px) rotate(0deg); }
-            50% { transform: translateZ(100px) translateY(-15px) rotate(3deg); }
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
         }
-
-        .visual-side img.main-object:active { cursor: grabbing; }
 
         /* Footer Navigation */
         .footer-navigation {
@@ -420,7 +396,6 @@
 <body>
 
     <div class="window-wrapper">
-        <div class="mouse-glow" id="mouse-glow"></div>
         
         <header>
             <div class="brand-logo"><a href="#">DUNKIN' OBJECTS</a></div>
@@ -447,8 +422,8 @@
                     <span class="bg-giant-text" id="target-bg-text-2">GLAZED &nbsp; GLAZED &nbsp;</span>
                 </div>
                 
-                <div class="object-frame-wrapper" id="tilt-wrapper">
-                    <div class="object-frame" id="tilt-card">
+                <div class="object-frame-wrapper">
+                    <div class="object-frame">
                         <img src="./imgs/donut1.png" alt="Dunkin Core Object" class="main-object" id="target-img">
                     </div>
                 </div>
@@ -458,7 +433,7 @@
 
         <div class="footer-navigation">
             
-            <div class="nav-cell active-01" id="cell-1" onclick="switchExhibit('CULT OBJECT . 01', 'Famous<br>Glazed', '지정된 단맛의 규칙을 파괴하다. 던킨의 시그니처 텍스처를 크림 아카이브 감성으로 미니멀하게 정제해 낸 프리미엄 에디션 오브제.', 'GLAZED', './imgs/donut1.png', 1, this, 'rgba(255, 103, 31, 0.35)')">
+            <div class="nav-cell active-01" id="cell-1" onclick="switchExhibit('CULT OBJECT . 01', 'Famous<br>Glazed', '지정된 단맛의 규칙을 파괴하다. 던킨의 시그니처 텍스처를 크림 아카이브 감성으로 미니멀하게 정제해 낸 프리미엄 에디션 오브제.', 'GLAZED', './imgs/donut1.png', 1, this)">
                 <div class="meta-info">
                     <span class="index-num">01 / ORANGE SHADE</span>
                     <span class="object-title">FAMOUS GLAZED</span>
@@ -468,7 +443,7 @@
                 </div>
             </div>
 
-            <div class="nav-cell" id="cell-2" onclick="switchExhibit('CULT OBJECT . 02', 'Strawberry<br>Poison', '달콤한 스트로베리 시럽 위에 뿌려진 스프링클. 입안에 퍼지는 상큼한 딸기의 산미와 오묘한 밸런스를 느껴보세요.', 'POISON', './imgs/donut2.png', 2, this, 'rgba(225, 26, 128, 0.35)')">
+            <div class="nav-cell" id="cell-2" onclick="switchExhibit('CULT OBJECT . 02', 'Strawberry<br>Poison', '달콤한 스트로베리 시럽 위에 뿌려진 스프링클. 입안에 퍼지는 상큼한 딸기의 산미와 오묘한 밸런스를 느껴보세요.', 'POISON', './imgs/donut2.png', 2, this)">
                 <div class="meta-info">
                     <span class="index-num">02 / PINK SHADE</span>
                     <span class="object-title">STRAWBERRY FIELD</span>
@@ -478,7 +453,7 @@
                 </div>
             </div>
 
-            <div class="nav-cell" id="cell-3" onclick="switchExhibit('CULT OBJECT . 03', 'Bavarian<br>Deep Ash', '부드러운 크림 슈가와 바삭한 에쉬 브라운 입자의 충돌. 무겁고 고요하게 가라앉는 깊은 풍미의 미학을 남깁니다.', 'BAVARIAN', './imgs/donut3.png', 3, this, 'rgba(96, 76, 63, 0.4)')">
+            <div class="nav-cell" id="cell-3" onclick="switchExhibit('CULT OBJECT . 03', 'Bavarian<br>Deep Ash', '부드러운 크림 슈가와 바삭한 에쉬 브라운 입자의 충돌. 무겁고 고요하게 가라앉는 깊은 풍미의 미학을 남깁니다.', 'BAVARIAN', './imgs/donut3.png', 3, this)">
                 <div class="meta-info">
                     <span class="index-num">03 / BROWN SHADE</span>
                     <span class="object-title">BAVARIAN FIELD</span>
@@ -492,40 +467,10 @@
     </div>
 
     <script>
-        // 1. 전역 마우스 트래킹 조명(Aura) 스크립트
-        const glow = document.getElementById('mouse-glow');
-        window.addEventListener('mousemove', (e) => {
-            glow.style.left = e.clientX + 'px';
-            glow.style.top = e.clientY + 'px';
-        });
+        // 1. 하이퍼 셔터 드롭 전시 교체 인터랙션
+        let isAnimating = false;
 
-        // 2. 메인 프레임 3D 틸트(Tilt) 인터랙션 
-        const tiltWrapper = document.getElementById('tilt-wrapper');
-        const tiltCard = document.getElementById('tilt-card');
-
-        tiltWrapper.addEventListener('mousemove', (e) => {
-            const rect = tiltWrapper.getBoundingClientRect();
-            const x = e.clientX - rect.left; 
-            const y = e.clientY - rect.top; 
-            
-            // 정중앙을 0으로 잡고 각도 매핑 (-20deg ~ +20deg)
-            const xc = rect.width / 2;
-            const yc = rect.height / 2;
-            const angleX = (yc - y) / yc * 20; 
-            const angleY = (x - xc) / xc * 20;
-
-            tiltCard.style.transform = `rotateX(${angleX}deg) rotateY(${angleY}deg)`;
-        });
-
-        tiltWrapper.addEventListener('mouseleave', () => {
-            tiltCard.style.transform = 'rotateX(0deg) rotateY(0deg)';
-        });
-
-
-        // 3. 하이퍼 셔터 드롭 전시 교체 인터랙션
-        let isAnimating = false; // 중복 클릭 컷 방지용 플래그
-
-        function switchExhibit(meta, title, desc, bgText, imgPath, activeNum, element, glowColor) {
+        function switchExhibit(meta, title, desc, bgText, imgPath, activeNum, element) {
             if (isAnimating) return;
             isAnimating = true;
 
@@ -536,15 +481,12 @@
             const bgTexts = document.querySelectorAll('.bg-giant-text');
             const mainImg = document.getElementById('target-img');
             
-            // A. 사선 가림막 파워 슬라이드 진입
+            // A. 사선 가림막 슬라이드 진입
             shutter.style.transition = 'left 0.45s cubic-bezier(0.645, 0.045, 0.355, 1)';
             shutter.style.left = '120%';
 
-            // B. 가림막이 중간을 지날 때쯤 내부 컨텐츠 전격 교체 (230ms 타이밍)
+            // B. 내부 컨텐츠 교체 (230ms 타이밍)
             setTimeout(() => {
-                // 루트 변수 변환을 통해 전체 오라(Aura) 톤 다운/업 매칭
-                document.documentElement.style.setProperty('--glow-color', glowColor);
-
                 targetMeta.innerText = meta;
                 targetTitle.innerHTML = title;
                 targetDesc.innerText = desc;
@@ -555,9 +497,9 @@
                 
                 mainImg.src = imgPath;
 
-                // 도넛 등장 스케일 임팩트 연출
+                // 도넛 등장 애니메이션 리셋
                 mainImg.style.animation = 'none';
-                mainImg.offsetHeight; // Reflow 발생으로 애니메이션 리셋
+                mainImg.offsetHeight; // Reflow 발생
                 mainImg.style.animation = 'objectFloat 4s ease-in-out infinite';
             }, 230);
 
@@ -568,7 +510,7 @@
                 isAnimating = false;
             }, 550);
 
-            // 하단 내비게이션 활성 클래스 유틸라이징
+            // 하단 내비게이션 활성 클래스 처리
             const allCells = document.querySelectorAll('.nav-cell');
             allCells.forEach(cell => {
                 cell.classList.remove('active-01', 'active-02', 'active-03');
