@@ -11,6 +11,7 @@
             --dnk-orange: #FF671F;
             --dnk-cream: #FDFBF7;
             --dnk-brown: #2B1A11;
+            --glow-color: rgba(255, 103, 31, 0.2);
         }
 
         * {
@@ -24,6 +25,7 @@
             color: var(--dnk-brown); 
             font-family: 'Noto Sans KR', sans-serif;
             overflow-x: hidden;
+            perspective: 1000px;
         }
 
         .window-wrapper {
@@ -37,7 +39,7 @@
             justify-content: space-between;
         }
 
-        /* HEADER */
+        /* Header */
         header {
             width: 100%;
             max-width: 1600px;
@@ -57,7 +59,7 @@
             color: var(--dnk-brown);
             text-decoration: none;
             letter-spacing: -1px;
-            transition: color 0.3s;
+            transition: color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         header .brand-logo a:hover {
@@ -81,34 +83,36 @@
             text-decoration: none;
             letter-spacing: 1px;
             position: relative;
+            padding-bottom: 4px;
         }
 
         header ul li a::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: 0;
             left: 0;
             width: 0;
             height: 2px;
             background-color: var(--dnk-orange);
-            transition: width 0.3s ease;
+            transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         header ul li a:hover::after {
             width: 100%;
         }
 
-        /* SHOWCASE CONTAINER */
+        /* Showcase Container */
         .showcase-container {
             width: 100%;
             max-width: 1600px;
             margin: 0 auto;
-            padding: 60px;
+            padding: 40px 60px;
             display: flex;
             align-items: stretch;
             flex: 1;
         }
 
+        /* Text Side */
         .text-side {
             width: 45%;
             display: flex;
@@ -116,6 +120,7 @@
             justify-content: center;
             padding-right: 40px;
             border-right: 1px solid rgba(43, 26, 17, 0.15);
+            z-index: 10;
         }
 
         .text-side .collection-name {
@@ -129,16 +134,27 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             display: inline-block;
+            transform: translateY(0);
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Text Masking Reveal Effect */
+        .reveal-wrapper {
+            overflow: hidden;
+            margin-bottom: 10px;
         }
 
         .text-side h1 {
             font-family: 'Bodoni Moda', serif;
             font-style: italic;
             font-size: min(4.2vw, 3.8em); 
-            line-height: 1.1em;
+            line-height: 1.2em;
             font-weight: 900;
             color: var(--dnk-brown);
-            white-space: pre-line; /* 자바스크립트의 \n 줄바꿈 인식 고도화 */
+            word-break: keep-all; 
+            overflow-wrap: normal; 
+            transform: translateY(0);
+            transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .text-side p {
@@ -146,9 +162,11 @@
             font-weight: 400;
             line-height: 1.8em;
             color: rgba(43, 26, 17, 0.7);
-            margin-top: 30px;
+            margin-top: 20px;
             word-break: keep-all;
             max-width: 480px;
+            transform: translateY(0);
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s;
         }
 
         .text-side .archive-btn {
@@ -163,15 +181,33 @@
             font-weight: 500;
             letter-spacing: 2px;
             text-decoration: none;
-            transition: transform 0.3s ease, background 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            transition: transform 0.3s, color 0.3s;
+        }
+
+        .text-side .archive-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, var(--dnk-pink) 0%, var(--dnk-orange) 100%);
+            transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: -1;
         }
 
         .text-side .archive-btn:hover {
-            background: linear-gradient(135deg, var(--dnk-pink) 0%, var(--dnk-orange) 100%);
-            transform: translateX(5px);
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(225, 26, 128, 0.2);
         }
 
-        /* VISUAL SIDE */
+        .text-side .archive-btn:hover::before {
+            left: 0;
+        }
+
+        /* Visual Side */
         .visual-side {
             width: 55%;
             position: relative;
@@ -179,6 +215,20 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
+        }
+
+        /* Background Glow Layer */
+        .visual-side::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: var(--glow-color);
+            filter: blur(80px);
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+            transition: background 0.8s ease;
         }
 
         .visual-side .bg-giant-text {
@@ -191,7 +241,8 @@
             user-select: none;
             z-index: 1;
             white-space: nowrap;
-            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease;
+            transition: transform 0.2s ease-out, opacity 0.5s;
+            will-change: transform;
         }
 
         .object-frame {
@@ -204,6 +255,12 @@
             align-items: center;
             z-index: 2;
             background-color: transparent;
+            overflow: hidden;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .object-frame:hover {
+            transform: scale(1.02);
         }
 
         .object-frame::before {
@@ -214,16 +271,29 @@
             font-family: 'Montserrat', sans-serif;
             color: var(--dnk-brown);
             font-size: 1.2em;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.3; }
+            50% { opacity: 1; }
+            100% { opacity: 0.3; }
         }
 
         .visual-side img.main-object {
             max-width: 75%;
             height: auto;
             z-index: 3;
-            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease; /* 트랜지션 텐션 강화 */
+            filter: drop-shadow(0 20px 30px rgba(43, 26, 11, 0.15));
+            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+            cursor: pointer;
         }
 
-        /* FOOTER NAVIGATION */
+        .visual-side img.main-object:hover {
+            transform: scale(1.1) rotate(8deg) !important;
+        }
+
+        /* Footer Navigation */
         .footer-navigation {
             width: 100%;
             max-width: 1600px;
@@ -241,8 +311,18 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: all 0.3s ease;
-            border-top: 4px solid transparent; /* 기본 공간 확보로 덜컹거림 방지 */
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            background-color: transparent;
+        }
+
+        .footer-navigation .nav-cell::before {
+            content: '';
+            position: absolute;
+            top: -4px; left: 0;
+            width: 100%; height: 0;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: -1;
         }
 
         .footer-navigation .nav-cell:last-child {
@@ -252,6 +332,11 @@
         .footer-navigation .nav-cell .meta-info {
             display: flex;
             flex-direction: column;
+            transition: transform 0.3s;
+        }
+
+        .footer-navigation .nav-cell:hover .meta-info {
+            transform: translateX(5px);
         }
 
         .footer-navigation .nav-cell .meta-info .index-num {
@@ -269,6 +354,7 @@
             color: var(--dnk-brown);
         }
 
+        /* Preview Circle Hooks */
         .footer-navigation .nav-cell .preview-circle {
             width: 45px;
             height: 45px;
@@ -279,7 +365,7 @@
             justify-content: center;
             align-items: center;
             background-color: #fff;
-            transition: transform 0.4s ease;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s;
         }
 
         .footer-navigation .nav-cell .preview-circle img {
@@ -288,27 +374,30 @@
         }
 
         .footer-navigation .nav-cell:hover .preview-circle {
-            transform: rotate(45deg) scale(1.1);
+            transform: scale(1.2) rotate(90deg);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
-        /* ACTIVE STATES (Cleaned up !important) */
+        /* Active Interaction Styles */
         .footer-navigation .nav-cell.active-01 {
-            background-color: rgba(255, 103, 31, 0.06);
-            border-top-color: var(--dnk-orange);
+            background-color: rgba(255, 103, 31, 0.04);
+            border-top: 4px solid var(--dnk-orange);
         }
-        .footer-navigation .nav-cell.active-01 .index-num { color: var(--dnk-orange); }
-
-        不可 .footer-navigation .nav-cell.active-02 {
-            background-color: rgba(225, 26, 128, 0.06);
-            border-top-color: var(--dnk-pink);
+        
+        .footer-navigation .nav-cell.active-02 {
+            background-color: rgba(225, 26, 128, 0.04);
+            border-top: 4px solid var(--dnk-pink);
         }
-        .footer-navigation .nav-cell.active-02 .index-num { color: var(--dnk-pink); }
-       
+        
         .footer-navigation .nav-cell.active-03 {
-            background-color: rgba(43, 26, 17, 0.06); 
-            border-top-color: var(--dnk-brown);
+            background-color: #EDE6DF; 
+            border-top: 4px solid #604C3F;
         }
-        .footer-navigation .nav-cell.active-03 .index-num { color: var(--dnk-brown); }
+
+        .footer-navigation .nav-cell.active-03 .meta-info .index-num {
+            color: #604C3F;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -327,13 +416,13 @@
         <div class="showcase-container">
             
             <div class="text-side">
-                <div class="collection-name" id="target-meta">CULT OBJECT . 01</div>
-                <h1 id="target-title">Famous<br>Original Glazed</h1>
-                <p id="target-desc">지정된 단맛의 규칙을 파괴하다. 던킨의 시그니처 텍스처를 크림 아카이브 감성으로 미니멀하게 정제해 낸 프리미엄 에디션 오브제.</p>
+                <div class="reveal-wrapper"><div class="collection-name" id="target-meta">CULT OBJECT . 01</div></div>
+                <div class="reveal-wrapper"><h1 id="target-title">Famous<br>Original Glazed</h1></div>
+                <div class="reveal-wrapper"><p id="target-desc">지정된 단맛의 규칙을 파괴하다.<br>던킨의 시그니처 텍스처를 크림 아카이브 감성으로 미니멀하게 정제해 낸 프리미엄 에디션 오브제.</p></div>
                 <a href="#" class="archive-btn">VIEW DETAILS</a>
             </div>
 
-            <div class="visual-side">
+            <div class="visual-side" id="visual-zone">
                 <div class="bg-giant-text" id="target-bg-text">GLAZED</div>
                 
                 <div class="object-frame">
@@ -344,7 +433,8 @@
         </div>
 
         <div class="footer-navigation">
-            <div class="nav-cell active-01" id="cell-1" onclick="switchExhibit('CULT OBJECT . 01', 'Famous\nOriginal Glazed', '지정된 단맛의 규칙을 파괴하다. 던킨의 시그니처 텍스처를 크림 아카이브 감성으로 미니멀하게 정제해 낸 프리미엄 에디션 오브제.', 'GLAZED', './imgs/donut1.png', 1, this)">
+            
+            <div class="nav-cell active-01" id="cell-1" onclick="switchExhibit('CULT OBJECT . 01', 'Famous<br>Glazed', '지정된 단맛의 규칙을 파괴하다. 던킨의 시그니처 텍스처를 크림 아카이브 감성으로 미니멀하게 정제해 낸 프리미엄 에디션 오브제.', 'GLAZED', './imgs/donut1.png', 1, this, 'rgba(255, 103, 31, 0.25)')">
                 <div class="meta-info">
                     <span class="index-num">01 / ORANGE SHADE</span>
                     <span class="object-title">FAMOUS GLAZED</span>
@@ -354,7 +444,7 @@
                 </div>
             </div>
 
-            <div class="nav-cell" id="cell-2" onclick="switchExhibit('CULT OBJECT . 02', 'Strawberry\nPoison Field', '달콤한 스트로베리 시럽 위에 뿌려진 스프링클. 입안에 퍼지는 상큼한 딸기의 산미와 오브제 본질의 조화.', 'POISON', './imgs/donut2.png', 2, this)">
+            <div class="nav-cell" id="cell-2" onclick="switchExhibit('CULT OBJECT . 02', 'Strawberry<br>Poison', '달콤한 스트로베리 시럽 위에 뿌려진 스프링클. 입안에 퍼지는 상큼한 딸기의 산미와 오묘한 밸런스를 느껴보세요.', 'POISON', './imgs/donut2.png', 2, this, 'rgba(225, 26, 128, 0.25)')">
                 <div class="meta-info">
                     <span class="index-num">02 / PINK SHADE</span>
                     <span class="object-title">STRAWBERRY FIELD</span>
@@ -364,7 +454,7 @@
                 </div>
             </div>
 
-            <div class="nav-cell" id="cell-3" onclick="switchExhibit('CULT OBJECT . 03', 'Bavarian\nDeep Ash Brown', '부드러운 크림 슈가와 바삭한 에쉬 브라운 입자의 충돌. 무겁고 고요하게 가라앉는 깊은 풍미를 시각화합니다.', 'BAVARIAN', './imgs/donut3.png', 3, this)">
+            <div class="nav-cell" id="cell-3" onclick="switchExhibit('CULT OBJECT . 03', 'Bavarian<br>Deep Ash', '부드러운 크림 슈가와 바삭한 에쉬 브라운 입자의 충돌. 무겁고 고요하게 가라앉는 깊은 풍미의 미학을 남깁니다.', 'BAVARIAN', './imgs/donut3.png', 3, this, 'rgba(96, 76, 63, 0.3)')">
                 <div class="meta-info">
                     <span class="index-num">03 / BROWN SHADE</span>
                     <span class="object-title">BAVARIAN FIELD</span>
@@ -379,36 +469,66 @@
     </div>
 
     <script>
-        function switchExhibit(meta, title, desc, bgText, imgPath, activeNum, element) {
-            
-            // 텍스트 컴포넌트 업데이트
-            document.getElementById('target-meta').innerText = meta;
-            document.getElementById('target-title').textContent = title; // pre-line 속성과 반응하도록 변경
-            document.getElementById('target-desc').innerText = desc;
-            
-            // 배경 대형 텍스트 애니메이션 제어
-            const bgTextEl = document.getElementById('target-bg-text');
-            bgTextEl.style.opacity = '0';
-            bgTextEl.style.transform = 'translateX(-20px)';
-            
-            setTimeout(() => {
-                bgTextEl.innerText = bgText;
-                bgTextEl.style.opacity = '0.04';
-                bgTextEl.style.transform = 'translateX(0)';
-            }, 150);
+        // 거대 배경 텍스트 마우스 반응형 매커니즘 (Parallax)
+        const visualZone = document.getElementById('visual-zone');
+        const giantText = document.getElementById('target-bg-text');
 
-            // 메인 오브제 이미지 트랜지션 (쿠션감 있는 바운스 효과 추가)
-            const mainImg = document.getElementById('target-img');
-            mainImg.style.transform = 'scale(0.6) rotate(-12deg)';
-            mainImg.style.opacity = '0';
+        visualZone.addEventListener('mousemove', (e) => {
+            const { clientX, clientY } = e;
+            const { innerWidth, innerHeight } = window;
             
+            // 중심 기준 마우스 좌표 백분율 계산
+            const moveX = ((clientX - innerWidth / 2) / innerWidth) * 45;
+            const moveY = ((clientY - innerHeight / 2) / innerHeight) * 45;
+
+            giantText.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        });
+
+        visualZone.addEventListener('mouseleave', () => {
+            giantText.style.transform = 'translate(0px, 0px)';
+        });
+
+        // 전시 인터랙션 스위칭 함수
+        function switchExhibit(meta, title, desc, bgText, imgPath, activeNum, element, glowColor) {
+            
+            const targetMeta = document.getElementById('target-meta');
+            const targetTitle = document.getElementById('target-title');
+            const targetDesc = document.getElementById('target-desc');
+            const targetBgText = document.getElementById('target-bg-text');
+            const mainImg = document.getElementById('target-img');
+            
+            // 1. 텍스트 트랜지션 (사라지는 모션)
+            targetMeta.style.transform = 'translateY(-30px)';
+            targetTitle.style.transform = 'translateY(50px)';
+            targetDesc.style.transform = 'translateY(30px)';
+            targetBgText.style.opacity = '0';
+
+            // 2. 메인 오브제 트랜지션 (스핀하며 사라짐)
+            mainImg.style.transform = 'scale(0.4) rotate(-75deg)';
+            mainImg.style.opacity = '0';
+
+            // 3. 백그라운드 무드 네온 변경
+            document.documentElement.style.setProperty('--glow-color', glowColor);
+
             setTimeout(() => {
+                // 데이터 교체
+                targetMeta.innerText = meta;
+                targetTitle.innerHTML = title;
+                targetDesc.innerText = desc;
+                targetBgText.innerText = bgText;
                 mainImg.src = imgPath;
+
+                // 4. 컴백 애니메이션 (다시 차오르는 모션)
+                targetMeta.style.transform = 'translateY(0)';
+                targetTitle.style.transform = 'translateY(0)';
+                targetDesc.style.transform = 'translateY(0)';
+                targetBgText.style.opacity = '1';
+
                 mainImg.style.transform = 'scale(1) rotate(0deg)';
                 mainImg.style.opacity = '1';
-            }, 200);
+            }, 300);
 
-            // 하단 탭 Active 클래스 교체 고도화
+            // 하단 내비게이션 탭 상태 최적화
             const allCells = document.querySelectorAll('.nav-cell');
             allCells.forEach(cell => {
                 cell.classList.remove('active-01', 'active-02', 'active-03');
