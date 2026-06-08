@@ -41,9 +41,9 @@
 
         header {
             width: 100%;
-            max-width: 1600px;
+            max-width: 1800px; /* 1600px -> 1800px로 대화면 확장 */
             margin: 0 auto;
-            padding: 35px 60px;
+            padding: 40px 60px; /* 상하 패딩 소폭 확대 */
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -100,7 +100,7 @@
 
         .showcase-container {
             width: 100%;
-            max-width: 1600px;
+            max-width: 1800px; /* 1600px -> 1800px로 대화면 확장 */
             margin: 0 auto;
             padding: 0 60px;
             display: flex;
@@ -124,7 +124,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding-right: 60px;
+            padding-right: 80px; /* 60px -> 80px로 간격 확보 */
             border-right: 1px solid rgba(43, 26, 17, 0.15);
             z-index: 10;
         }
@@ -136,7 +136,7 @@
 
         .text-side .collection-name {
             font-family: 'Montserrat', sans-serif;
-            font-size: 0.9em;
+            font-size: 1.1em; /* 0.9em -> 1.1em으로 확대 */
             font-weight: 800;
             letter-spacing: 5px;
             background: linear-gradient(135deg, var(--dnk-pink) 0%, var(--dnk-orange) 100%);
@@ -150,7 +150,7 @@
         .text-side h1 {
             font-family: 'Bodoni Moda', serif;
             font-style: italic;
-            font-size: min(4.5vw, 4.2em); 
+            font-size: min(5vw, 5.2em); /* 최대 크기를 4.2em -> 5.2em으로 시원하게 확대 */
             line-height: 1.15em;
             font-weight: 900;
             color: var(--dnk-brown);
@@ -159,26 +159,26 @@
         }
 
         .text-side p {
-            font-size: 1em;
+            font-size: 1.15em; /* 1em -> 1.15em으로 본문 가독성 향상 */
             font-weight: 400;
             line-height: 1.9em;
             color: rgba(43, 26, 17, 0.8);
-            margin-top: 20px;
+            margin-top: 25px;
             word-break: keep-all;
-            max-width: 480px;
+            max-width: 580px; /* 본문 최대 너비 확장 */
             transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .text-side .archive-btn {
             display: inline-block;
             align-self: flex-start;
-            margin-top: 40px;
-            padding: 18px 45px;
+            margin-top: 45px;
+            padding: 22px 55px; /* 버튼 스케일 확대 */
             background-color: var(--dnk-brown);
             background-image: none;
             color: var(--dnk-cream);
             font-family: 'Montserrat', sans-serif;
-            font-size: 0.85em;
+            font-size: 0.95em; /* 0.85em -> 0.95em */
             font-weight: 800;
             letter-spacing: 3px;
             text-decoration: none;
@@ -221,7 +221,7 @@
 
         .bg-giant-text {
             font-family: 'Montserrat', sans-serif;
-            font-size: 13em;
+            font-size: 16em; /* 13em -> 16em으로 배경 타이포그래피 확대 */
             font-weight: 900;
             color: rgba(43, 26, 17, 0.05);
             letter-spacing: -2px;
@@ -239,8 +239,8 @@
         }
 
         .object-frame {
-            width: 440px;
-            height: 500px;
+            width: 520px;   /* 440px -> 520px로 확대 */
+            height: 580px;  /* 500px -> 580px로 확대 */
             border: 1px solid var(--dnk-brown);
             position: relative;
             display: flex;
@@ -263,7 +263,7 @@
         }
 
         .visual-side img.main-object {
-            max-width: 80%;
+            max-width: 85%; /* 80% -> 85%로 오브젝트 이미지 비중 확대 */
             height: auto;
             z-index: 3;
             filter: drop-shadow(0 30px 40px rgba(43, 26, 11, 0.25));
@@ -278,7 +278,7 @@
 
         .footer-navigation {
             width: 100%;
-            max-width: 1600px;
+            max-width: 1800px; /* 1600px -> 1800px로 하단바 전체 확장 */
             margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(3, 1fr); 
@@ -288,7 +288,7 @@
         }
 
         .footer-navigation .nav-cell {
-            padding: 30px 40px;
+            padding: 40px 50px; /* 30px 40px -> 40px 50px로 셀 크기 확대 */
             border-right: 1px solid rgba(43, 26, 17, 0.15);
             cursor: pointer;
             display: flex;
@@ -321,22 +321,22 @@
 
         .footer-navigation .nav-cell .meta-info .index-num {
             font-family: 'Montserrat', sans-serif;
-            font-size: 0.75em;
+            font-size: 0.85em; /* 0.75em -> 0.85em */
             font-weight: 700;
             color: rgba(43, 26, 17, 0.4);
-            margin-bottom: 5px;
+            margin-bottom: 7px;
         }
 
         .footer-navigation .nav-cell .meta-info .object-title {
-            font-size: 1.05em;
+            font-size: 1.2em; /* 1.05em -> 1.2em */
             font-weight: 800;
             letter-spacing: 1px;
             color: var(--dnk-brown);
         }
 
         .footer-navigation .nav-cell .preview-circle {
-            width: 48px;
-            height: 48px;
+            width: 56px;  /* 48px -> 56px로 하단 썸네일 원 확대 */
+            height: 56px; /* 48px -> 56px로 하단 썸네일 원 확대 */
             border-radius: 50%;
             border: 1.5px solid rgba(43, 26, 17, 0.2);
             overflow: hidden;
@@ -375,7 +375,7 @@
     <div class="window-wrapper">
         
         <header>
-            <div class="brand-logo"><a href="#">DUNKIN' DONUTS</a></div>
+            <div class="brand-logo"><a href="#">DUNKIN' OBJECTS</a></div>
             <ul>
                 <li><a href="#">COLLECTION</a></li>
                 <li><a href="#">LAB STORE</a></li>
@@ -387,21 +387,21 @@
             <div class="slide-shutter" id="shutter"></div>
             
             <div class="text-side">
-                <div class="reveal-wrapper"><div class="collection-name" id="target-meta">CULT OBJECT . 01</div></div>
-                <div class="reveal-wrapper"><h1 id="target-title">Original<br> Glazed</h1></div>
-                <div class="reveal-wrapper"><p id="target-desc">지정된 단맛의 규칙을 파괴하다.<br>던킨의 시그니처 텍스처를 크림 아카이브 감성으로 미니멀하게 정제해 낸 프리미엄 에디션 오브제.</p></div>
+                <div class="reveal-wrapper"><div class="collection-name" id="target-meta">CULT OBJECT . 03</div></div>
+                <div class="reveal-wrapper"><h1 id="target-title">Bavarian<br>Deep Ash</h1></div>
+                <div class="reveal-wrapper"><p id="target-desc">부드러운 크림 슈가와 바삭한 에쉬 브라운 입자의 충돌. 무겁고 고요하게 가라앉는 깊은 풍미의 미학을 남깁니다.</p></div>
                 <a href="#" class="archive-btn">VIEW DETAILS</a>
             </div>
 
             <div class="visual-side">
                 <div class="bg-giant-wrap">
-                    <span class="bg-giant-text" id="target-bg-text">GLAZED &nbsp; GLAZED &nbsp;</span>
-                    <span class="bg-giant-text" id="target-bg-text-2">GLAZED &nbsp; GLAZED &nbsp;</span>
+                    <span class="bg-giant-text" id="target-bg-text">BAVARIAN &nbsp; BAVARIAN &nbsp;</span>
+                    <span class="bg-giant-text" id="target-bg-text-2">BAVARIAN &nbsp; BAVARIAN &nbsp;</span>
                 </div>
                 
                 <div class="object-frame-wrapper">
                     <div class="object-frame">
-                        <img src="./imgs/donut1.png" alt="Dunkin Core Object" class="main-object" id="target-img">
+                        <img src="./imgs/donut3.png" alt="Dunkin Core Object" class="main-object" id="target-img">
                     </div>
                 </div>
             </div>
@@ -410,10 +410,10 @@
 
         <div class="footer-navigation">
             
-            <div class="nav-cell active-01" id="cell-1" onclick="switchExhibit('CULT OBJECT . 01', 'Original<br>Glazed', '지정된 단맛의 규칙을 파괴하다. 던킨의 시그니처 텍스처를 크림 아카이브 감성으로 미니멀하게 정제해 낸 프리미엄 에디션 오브제.', 'GLAZED', './imgs/donut1.png', 1, this)">
+            <div class="nav-cell" id="cell-1" onclick="switchExhibit('CULT OBJECT . 01', 'Famous<br>Glazed', '지정된 단맛의 규칙을 파괴하다. 던킨의 시그니처 텍스처를 크림 아카이브 감성으로 미니멀하게 정제해 낸 프리미엄 에디션 오브제.', 'GLAZED', './imgs/donut1.png', 1, this)">
                 <div class="meta-info">
                     <span class="index-num">01 / ORANGE SHADE</span>
-                    <span class="object-title">ORIGINAL GLAZED</span>
+                    <span class="object-title">FAMOUS GLAZED</span>
                 </div>
                 <div class="preview-circle">
                     <img src="./imgs/thumb1.png" alt="thumb1">
@@ -430,7 +430,7 @@
                 </div>
             </div>
 
-            <div class="nav-cell" id="cell-3" onclick="switchExhibit('CULT OBJECT . 03', 'Bavarian<br>Deep Ash', '부드러운 크림 슈가와 바삭한 에쉬 브라운 입자의 충돌. 무겁고 고요하게 가라앉는 깊은 풍미의 미학을 남깁니다.', 'BAVARIAN', './imgs/donut3.png', 3, this)">
+            <div class="nav-cell active-03" id="cell-3" onclick="switchExhibit('CULT OBJECT . 03', 'Bavarian<br>Deep Ash', '부드러운 크림 슈가와 바삭한 에쉬 브라운 입자의 충돌. 무겁고 고요하게 가라앉는 깊은 풍미의 미학을 남깁니다.', 'BAVARIAN', './imgs/donut3.png', 3, this)">
                 <div class="meta-info">
                     <span class="index-num">03 / BROWN SHADE</span>
                     <span class="object-title">BAVARIAN FIELD</span>
